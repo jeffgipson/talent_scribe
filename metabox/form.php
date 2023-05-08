@@ -1,5 +1,5 @@
 <div class="hcf_box">
-    <img class="second-box" src="<?php echo esc_url(plugins_url('/assets/header.png', __FILE__)); ?>" style="width: calc(100% + 24px);margin-left: -12px;margin-top: -6px;height: 27px;object-fit: cover;object-position: top;">
+    <img class="second-box" src="<?php echo esc_url(plugins_url('../assets/header.png', __FILE__)); ?>" style="width: calc(100% + 24px);margin-left: -12px;margin-top: -6px;height: 27px;object-fit: cover;object-position: top;">
     <div class="seo-cont">
         <p class="meta-options hcf_field">
             <label for="hcf_title">Meta Title</label>
