@@ -25,6 +25,8 @@ include plugin_dir_path(__FILE__) . '/js/js.php';
 
 add_action('admin_footer-post.php', 'add_rw_ts_button');
 add_action('admin_footer-post-new.php', 'add_rw_ts_button');
+// support for wpjoboard plugin
+add_action('toplevel_page_wpjb-job', 'add_rw_ts_button');
 
 
 // include the settings page

@@ -21,6 +21,7 @@ div#rw-ts-prompt {
 div#rwgpt {
     background-image: url(<?php echo esc_url( plugins_url('../assets/background.png', __FILE__ ) ); ?>);
     background-size: cover;
+    background-color: #fff;
 }
 
 #rw-ts-prompt {

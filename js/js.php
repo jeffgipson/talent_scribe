@@ -1,6 +1,8 @@
 <?php
+$page = $_GET['page'];
 ?>
     <script>
+        console.log('loaded')
 
         var servicekey = '';
 
@@ -76,7 +78,8 @@
                 //create a form for custom prompt with checkbox to enable it
                 // jQuery('#content').after('<div id="rw-ts-prompt" style="display: none;"><label for="rw-ts-prompt-checkbox">Use Custom Prompt</label><input type="checkbox" id="rw-ts-prompt-checkbox" name="rw-ts-prompt-checkbox" value="rw-ts-prompt-checkbox"><input type="text" id="rw-ts-prompt-text" name="rw-ts-prompt-text" value="" placeholder="Enter Custom Prompt"></div>')
                 //create the button
-                jQuery('#content,.block-editor-writing-flow').after('' +
+                console.log('ready')
+                jQuery('#content,.block-editor-writing-flow,.wpjb-form-group-job').after('' +
                     '<div style="" id="rwgpt">' +
                     '<img src="<?php echo esc_url(plugins_url('../assets/header.png', __FILE__)); ?>" style="width: 100%;">' +
                     '<div style="" id="rw-ts-prompt">' +
@@ -85,15 +88,24 @@
                     '<h3>Choose a prompt</h3>' +
                     <?php
 
-                    if (get_post_type() == 'job_listing') {
 
+                    if (get_post_type() == 'job_listing') {
                     ?>
                     //create a checkbox for a job description rewrite prompt
                     '<input type="checkbox" id="rw-ts-job-description-rewrite" name="rw-ts-job-description-rewrite" value=""><label for="rw-ts-job-description-rewrite">Job Description Rewrite</label><br>' +
                     //create a checkbox for job description creation based on the job title and the location
                     '<input type="checkbox" id="rw-ts-job-description-creation" name="rw-ts-job-description-creation" value=""><label for="rw-ts-job-description-creation">Job Description Creation(Based on job title and location)</label><br>' +
                     <?php
-                    } else {
+                    }
+
+                    if ( $page == 'wpjb-job') {
+                     ?>
+                    //create a checkbox for a job description rewrite prompt
+                    '<input type="checkbox" id="rw-ts-job-description-rewrite" name="rw-ts-job-description-rewrite" value=""><label for="rw-ts-job-description-rewrite">Job Description Rewrite</label><br>' +
+                    //create a checkbox for job description creation based on the job title and the location
+                    '<input type="checkbox" id="rw-ts-job-description-creation" name="rw-ts-job-description-creation" value=""><label for="rw-ts-job-description-creation">Job Description Creation(Based on job title and location)</label><br>' +
+                    <?php }
+                    else {
                     //do other stuff
 
 
@@ -183,6 +195,13 @@
                         content = wp.data.select("core/editor").getEditedPostAttribute('content');
                         console.log(title)
                     }
+                    //support for wpjobboard plugin
+                    else if(jQuery('.wpjb-form-group-job').length){
+                        title = jQuery('#job_title').val();
+                        content = tinyMCE.get('job_description').getContent()
+                        console.log(title)
+                        console.log(content)
+                    }
                         else{
                             title = jQuery('#title').val();
                             content = jQuery('#content').val();
@@ -267,6 +286,9 @@
                         // jQuery('.wp-editor-area').val(contentstring)
                         if (jQuery('.wp-block').length) {
                             wp.data.dispatch( 'core/editor' ).editPost( { content: contentstring } );
+                        }
+                        else if(jQuery('.wpjb-form-group-job').length){
+                            tinyMCE.get('job_description').setContent(contentstring)
                         }
                         else{
                             jQuery('#content').val(contentstring)
