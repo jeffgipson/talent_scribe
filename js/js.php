@@ -33,14 +33,13 @@
                     'Authorization': 'Bearer <?php echo get_option('rw-ts_text_apikey'); ?>'
                 },
                 success: function (data) {
-                    // console.log(data)
+                     // console.log(data)
 
                     //if the license is valid
                     if (data.status == 'Active') {
                         // console.log(data.status)
                         // console.log(data.service_key)
                         servicekey = data.service_key
-
 
                         //console.log(servicekey)
 
@@ -77,7 +76,7 @@
                 //create a form for custom prompt with checkbox to enable it
                 // jQuery('#content').after('<div id="rw-ts-prompt" style="display: none;"><label for="rw-ts-prompt-checkbox">Use Custom Prompt</label><input type="checkbox" id="rw-ts-prompt-checkbox" name="rw-ts-prompt-checkbox" value="rw-ts-prompt-checkbox"><input type="text" id="rw-ts-prompt-text" name="rw-ts-prompt-text" value="" placeholder="Enter Custom Prompt"></div>')
                 //create the button
-                jQuery('#content').after('' +
+                jQuery('#content,.block-editor-writing-flow').after('' +
                     '<div style="" id="rwgpt">' +
                     '<img src="<?php echo esc_url(plugins_url('../assets/header.png', __FILE__)); ?>" style="width: 100%;">' +
                     '<div style="" id="rw-ts-prompt">' +
@@ -175,8 +174,21 @@
                     console.log('clicked')
 
                     var prompt = ""
-                    var title = jQuery('#title').val();
-                    var content = jQuery('#content').val();
+                    var title = ""
+                    var content = ""
+
+                    //if wp-block class exists on the page set title
+                    if (jQuery('.wp-block').length) {
+                        title = wp.data.select("core/editor").getEditedPostAttribute('title');
+                        content = wp.data.select("core/editor").getEditedPostAttribute('content');
+                        console.log(title)
+                    }
+                        else{
+                            title = jQuery('#title').val();
+                            content = jQuery('#content').val();
+                        console.log(title)
+                        }
+
 
                     //if job description rewrite is checked use the job description rewrite prompt
                     if (jQuery('#rw-ts-job-description-rewrite').is(':checked')) {
@@ -252,7 +264,14 @@
                             contentstring = contentstring.slice('\n\n'.length);
                         }
 
-                        jQuery('.wp-editor-area').val(contentstring)
+                        // jQuery('.wp-editor-area').val(contentstring)
+                        if (jQuery('.wp-block').length) {
+                            wp.data.dispatch( 'core/editor' ).editPost( { content: contentstring } );
+                        }
+                        else{
+                            jQuery('#content').val(contentstring)
+                        }
+
                         // jQuery('.wp-editor-area').val(response.choices[0].text.replace('.\n\n', '').replace('\n\n', ''))
                         // jQuery('#rw-ts-btn').after('<button id="rw-ts-btn-more">Add More Content</button>')
                         //Todo add another call to add more content
@@ -266,6 +285,7 @@
                         //if yoast id is on the page then run another call to get seo content
                         if (jQuery("#wpseo-metabox-root").length == 0) {
                             console.log('Not here')
+
                         } else {
                             jQuery('#rw-ts-loading-seo').show()
 

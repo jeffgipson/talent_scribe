@@ -126,9 +126,12 @@ function render_rw_ts_settings_page()
                                         jQuery('#rw-ts-btn').prepend('<img src="<?php echo esc_url(plugins_url('../assets//RW.png', __FILE__)); ?>" style="width: 20px;margin-right: 10px;">')
                                         //set url to my account page
                                         jQuery('#btnlink').attr('href', 'https://app.recruiterswebsites.com/users/sign_in')
-
+                                        jQuery('#of').show()
                                     } else {
                                         jQuery('#status').addClass('inactive')
+                                        //fill in the text for the button
+                                        jQuery('#status').text('Inactive')
+                                        jQuery('#of').hide()
                                         jQuery('#rw-ts-btn').html('Sign Up')
                                         jQuery('#rw-ts-btn').prepend('<img src="<?php echo esc_url(plugins_url('../assets//RW.png', __FILE__)); ?>" style="width: 20px;margin-right: 10px;">')
                                         //set url to sign up page
@@ -162,7 +165,7 @@ function render_rw_ts_settings_page()
 
                         </script>
                         <!--                        Show progress bar with usage vs limit and show status-->
-                        <label>Status:</label> <span class="" id="status"></span> <span id="usage"></span> of <span
+                        <label>Status:</label> <span class="" id="status"></span> <span id="usage"></span> <span id="of">of</span> <span
                                 id="limit"></span><br>
                         <div class="progress">
                             <progress id="file" value="" max=""></progress>

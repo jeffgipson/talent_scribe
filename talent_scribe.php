@@ -15,9 +15,7 @@ Text Domain: talentscribe
 // include metabox php file
 include plugin_dir_path(__FILE__) . '/metabox/metabox.php';
 
-function add_rw_ts_button()
-{
-
+function add_rw_ts_button(){
 //include css php file
 include plugin_dir_path(__FILE__) . '/styles/style.php';
 //include js php file
@@ -28,5 +26,7 @@ include plugin_dir_path(__FILE__) . '/js/js.php';
 add_action('admin_footer-post.php', 'add_rw_ts_button');
 add_action('admin_footer-post-new.php', 'add_rw_ts_button');
 
+
 // include the settings page
 require_once plugin_dir_path(__FILE__) . '/settings/settings.php';
+
