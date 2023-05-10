@@ -28,12 +28,13 @@ add_action('admin_menu', 'add_rw_ts_settings_page');
 
 function my_custom_admin_head()
 {
-//    echo '<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />';
-//    echo '<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>';
+    echo '<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />';
+    echo '<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>';
 }
 
 add_action('admin_head', 'my_custom_admin_head');
 add_action('wp_head', 'my_custom_admin_head');
+add_action('admin_footer', 'my_custom_admin_head');
 
 
 function render_rw_ts_settings_page()
@@ -71,6 +72,10 @@ function render_rw_ts_settings_page()
 
         #rw-ts-btn img {
             filter: brightness(0) invert(1);
+        }
+
+        span.select2.select2-container.select2-container--default.select2-container--focus {
+            width: 100% !important;
         }
     </style>
     <img src="<?php echo esc_url(plugins_url('../assets//header.png', __FILE__)); ?>"
@@ -175,26 +180,55 @@ function render_rw_ts_settings_page()
                     </td>
                 </tr>
 
-                <!--                <tr>-->
-                <!--                    <th scope="row">Industries:</th>-->
-                <!--                    <td>-->
-                <!--                        <select style="width:200px;" class="js-example-basic-multiple" name="industries[]" multiple="multiple">-->
-                <!--                            <option value="accounting">Accounting</option>-->
-                <!--                            <option value="finance">Finance</option>-->
-                <!--                        </select>-->
-                <!--                        <script>-->
-                <!--                            jQuery(document).ready(function() {-->
-                <!--                                jQuery('.js-example-basic-multiple').select2(-->
-                <!--                                    {-->
-                <!--                                        placeholder: "Select Industries"-->
-                <!--                                    }-->
-                <!--                                );-->
-                <!--                            });-->
-                <!--                        </script>-->
-                <!---->
-                <!---->
-                <!--                    </td>-->
-                <!--                </tr>-->
+                                <tr>
+                                    <th scope="row">Industries:</th>
+                                    <td>
+                                        <select id="industries" style="width:200px;" class="js-example-basic-multiple" name="rw-ts_industries[]" multiple="multiple">
+                                            <option value="agriculture">Agriculture</option>
+                                            <option value="automotive">Automotive</option>
+                                            <option value="banking">Banking</option>
+                                            <option value="biotechnology">Biotechnology</option>
+                                            <option value="construction">Construction</option>
+                                            <option value="education">Education</option>
+                                            <option value="energy">Energy</option>
+                                            <option value="entertainment">Entertainment</option>
+                                            <option value="financial services">Financial Services</option>
+                                            <option value="food processing">Food Processing</option>
+                                            <option value="healthcare">Healthcare</option>
+                                            <option value="hospitality">Hospitality</option>
+                                            <option value="information technology">Information Technology</option>
+                                            <option value="insurance">Insurance</option>
+                                            <option value="manufacturing">Manufacturing</option>
+                                            <option value="media">Media</option>
+                                            <option value="real estate">Real Estate</option>
+                                            <option value="retail">Retail</option>
+                                            <option value="telecommunications">Telecommunications</option>
+                                            <option value="transportation">Transportation</option>
+                                            <option value="utilities">Utilities</option>
+                                            <option value="wholesale trade">Wholesale Trade</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <script>
+                                            jQuery(document).ready(function() {
+                                                jQuery('.js-example-basic-multiple').select2(
+                                                    {
+                                                        placeholder: "Select Industries",
+                                                        width: '100%'
+
+                                                    }
+                                                );
+                                                jQuery('#industries').val(<?php echo json_encode(get_option('rw-ts_industries')); ?>).trigger('change');
+
+                                            });
+                                        </script>
+                                        <?php
+//                                        $selected_industries = $_POST['industries'];
+//                                        update_option('rw-ts_industries', $selected_industries);
+//                                        print_r( get_option('rw-ts_industries'));
+                                        ?>
+
+                                    </td>
+                                </tr>
                 <!--                <tr>-->
                 <!--                    <th scope="row">Language model:</th>-->
                 <!--                    <td>-->
@@ -462,6 +496,7 @@ function register_rw_ts_settings()
     register_setting('rw-ts-settings-group', 'rw-ts_rewriter_n');
     register_setting('rw-ts-settings-group', 'rw-ts_custom_prompt');
     register_setting('rw-ts-settings-group', 'rw-ts_custom_prompts');
+    register_setting('rw-ts-settings-group', 'rw-ts_industries');
 
 
 }

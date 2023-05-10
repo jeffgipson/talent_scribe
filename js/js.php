@@ -486,4 +486,25 @@ $page = $_GET['page'];
 
         //create a js function to make the pexels api calls
 
+
+
+        // jQuery.ajax({
+        //     url: 'https://api.openai.com/v1/chat/completions',
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Bearer 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'
+        //     },
+        //     data: JSON.stringify({
+        //         model: "gpt-3.5-turbo",
+        //         messages: [{"role": "user", "content": "Say this is a test!"}]
+        //     }),
+        //     success: function (data) {
+        //          console.log(data)
+        //     },
+        // })
+
+
+
     </script>
