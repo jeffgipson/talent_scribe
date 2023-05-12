@@ -1,6 +1,13 @@
 <style>
     <?php
-  if (get_post_type() == 'long-form-content') {
+//  if (get_post_type() == 'long-form-content') {
+if (isset($_GET['page_type']) && !empty($_GET['page_type'])) {
+    $page = $_GET['page_type'];
+} else {
+    $page = 'POST';
+}
+
+if ($page == 'long-form-content') {
   ?>
     .mce-statusbar!important {
         display: none;
@@ -140,6 +147,9 @@
         top: 115px;
         right: 0px;
     }
-    <?php }
+    label#title-prompt-text {
+        display: none;
+    }
+<!--    --><?php }
     ?>
 </style>

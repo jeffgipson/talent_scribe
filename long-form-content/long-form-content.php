@@ -1,54 +1,4 @@
 <?php
-function long_form_content_post_type(){
-    $labels = array(
-        'name' => 'Long Form Content',
-        'singular_name' => 'Long Form Content',
-        'add_new' => 'Add New',
-        'add_new_item' => 'Add New Long Form Content',
-        'edit_item' => 'Edit Long Form Content',
-        'new_item' => 'New Long Form Content',
-        'view_item' => 'View Long Form Content',
-        'search_items' => 'Search Long Form Content',
-        'not_found' => 'No Long Form Content found',
-        'not_found_in_trash' => 'No Long Form Content found in Trash',
-        'parent_item_colon' => '',
-    );
-    $args = array(
-        'label' => __('Long Form Content'),
-        'labels' => $labels,
-        'public' => true,
-        'can_export' => true,
-        'show_ui' => true,
-        '_builtin' => false,
-        'capability_type' => 'post',
-        'menu_icon' =>  esc_url(plugins_url('../assets/rw_white.png', __FILE__)),
-        'hierarchical' => false,
-        'rewrite' => array("slug" => "/"),
-        'supports' => array('title', 'thumbnail', 'custom-fields', 'editor'),
-        'show_in_nav_menus' => true,
-        'taxonomies' => array('long-form-content-category'),
-    );
-    register_post_type('long-form-content', $args);
-}
-add_action('init', 'long_form_content_post_type');
-//create long-form-content-category taxonomy
-function long_form_content_taxonomy()
-{
-    register_taxonomy(
-        'long-form-content-category',
-        'long-form-content',
-        array(
-            'hierarchical' => true,
-            'label' => 'Categories',
-            'query_var' => true,
-            'rewrite' => array(
-                'slug' => 'long-form-content-category',
-                'with_front' => false
-            )
-        )
-    );
-}
-add_action('init', 'long_form_content_taxonomy');
 
 //add meta boxes to long-form-content post type
 function long_form_content_meta_boxes()
@@ -59,9 +9,8 @@ add_action('add_meta_boxes', 'long_form_content_meta_boxes');
 //Register meta boxes
 function lfc_register_meta_boxes()
 {
-    add_meta_box('lfc', __('Talent Scribe AI', 'lfc'), 'lfc_display_callback', 'long_form_content');
+    add_meta_box('lfc', __('Talent Scribe AI', 'lfc'), 'lfc_display_callback', 'post');
 }
-
 
 add_action('add_meta_boxes', 'lfc_register_meta_boxes');
 
@@ -101,32 +50,31 @@ require_once plugin_dir_path(__FILE__) . './js.php';
 }
 add_action('admin_enqueue_scripts', 'lfc_js_css');
 
-
-
-//use the pre_get_posts to include long-form-content in the main query
-function lfc_include_post_types($query)
+//add sub_menu_page to posts menu
+function lfc_add_submenu_page()
 {
-    if (is_home() && $query->is_main_query()) {
-        $query->set('post_type', array('post', 'long-form-content'));
-    }
-    return $query;
+    add_submenu_page(
+        'edit.php',
+        'Content Builder',
+        'Content Builder',
+        'manage_options',
+        'long-form-content',
+        'lfc_submenu_page_callback',
+        2
+    );
 }
+add_action('admin_menu', 'lfc_add_submenu_page');
 
+//sub_menu_page callback function
+function lfc_submenu_page_callback()
+{
+    ?>
+<script>
+    //redirect to post new long-form-content page
+    window.location.href = "<?php echo admin_url('post-new.php?page_type=long-form-content'); ?>";
+</script>
+<?php   }
 
-
-
-
-//
-//function rich_text_editor_callback( $post ) {
-//    wp_editor(
-//        get_post_meta( $post->ID, 'rich_text_editor', true ),
-//        'rich_text_editor',
-//        array(
-//            'textarea_name' => 'rich_text_editor',
-//            'tinymce' => true,
-//        )
-//    );
-//}
 
 
 

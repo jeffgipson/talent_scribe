@@ -1,5 +1,13 @@
 <?php
-if (get_post_type() == 'long-form-content') {
+
+//is page parameter exists and isset
+if (isset($_GET['page_type']) && !empty($_GET['page_type'])) {
+    $page = $_GET['page_type'];
+} else {
+    $page = 'POST';
+}
+
+if ($page == 'long-form-content') {
 ?>
 <script>
     setTimeout(function () {
@@ -29,22 +37,16 @@ if (get_post_type() == 'long-form-content') {
 
                     <?php
                     //fetch the last 10 blog posts and return the titles put them into a comma separated string
-                    $args = array(
-                        'post_type' => 'post',
-                        'posts_per_page' => 10,
-                        'orderby' => 'date',
-                        'order' => 'DESC',
-                    );
-                    $query = new WP_Query($args);
-                    $titles = '';
-                    if ($query->have_posts()) {
-                        while ($query->have_posts()) {
-                            $query->the_post();
-                            $titles .= get_the_title() . ', ';
-                        }
-                    }
-                    wp_reset_postdata();
+                        $args = array(
+                            'numberposts' => 10
+                        );
 
+                        $latest_posts = get_posts( $args );
+                        //loop over latest posts and get the titles
+                        $titles = '';
+                        foreach ($latest_posts as $post) {
+                            $titles .= $post->post_title . ', ';
+                        }
                     ?>
                     var past_blogs = "<?php echo $titles; ?>"
                     var site_name = "<?php echo get_bloginfo( 'name' ); ?>"
@@ -284,13 +286,18 @@ if (get_post_type() == 'long-form-content') {
         });
             //onclick of the save button do stuff
             jQuery('#rw_ts_save_button').click(function () {
-            title = jQuery('#title').val();
-            intro = jQuery('#opener').val();
-            body = jQuery('#main_body').val();
-            var url = "https://api.openai.com/v1/completions"
-            var conclusion = jQuery('#conclusion').val();
-            var entire_post = intro + body + conclusion;
+
             jQuery('#content-html').click()
+                jQuery('#conclusion-html').click()
+                jQuery('#main_body-html').click()
+                jQuery('#opener-html').click()
+                title = jQuery('#title').val();
+                intro = jQuery('#opener').val();
+                body = jQuery('#main_body').val();
+                var url = "https://api.openai.com/v1/completions"
+                var conclusion = jQuery('#conclusion').val();
+                var entire_post = intro + body + conclusion;
+                console.log(entire_post)
             jQuery('#content').val(entire_post);
             jQuery('#content-tmce').click()
             GetSeo(servicekey,title,url)
