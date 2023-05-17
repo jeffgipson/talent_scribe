@@ -29,6 +29,12 @@ add_action('admin_enqueue_scripts', 'add_rw_ts_button');
 // support for wpjoboard plugin
 add_action('toplevel_page_wpjb-job', 'add_rw_ts_button');
 
+function fontawesome_dashboard() {
+    wp_enqueue_script( 'font-awesome', 'https://kit.fontawesome.com/3d74b65b72.js', array(), '6.0.0', true );
+}
+
+add_action('admin_init', 'fontawesome_dashboard');
+
 
 // include the settings page
 require_once plugin_dir_path(__FILE__) . 'settings/settings.php';

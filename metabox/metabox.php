@@ -4,7 +4,7 @@
  */
 function hcf_register_meta_boxes()
 {
-    add_meta_box('hcf-1', __('Talent Scribe AI', 'hcf'), 'hcf_display_callback', 'post');
+    add_meta_box('hcf-1', __('<div><i class="fa-sharp fa-solid fa-magnifying-glass"></i> Talent Scribe AI SEO & Images</div>', 'hcf'), 'hcf_display_callback', 'post');
 }
 
 add_action('add_meta_boxes', 'hcf_register_meta_boxes');

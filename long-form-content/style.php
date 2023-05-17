@@ -9,6 +9,9 @@ if (isset($_GET['page_type']) && !empty($_GET['page_type'])) {
 
 if ($page == 'long-form-content') {
   ?>
+    /*#wp-opener-wrap, #wp-main_body-wrap, #wp-conclusion-wrap,.step2,.step3,.step4 {*/
+    /*    visibility: hidden;*/
+    /*}*/
     .mce-statusbar!important {
         display: none;
     }
@@ -77,7 +80,7 @@ if ($page == 'long-form-content') {
 
     .long-form-cont textarea {
         width: 100%;
-        min-height: 60px;
+        /*min-height: 60px;*/
     }
 
     .hcf_field {
@@ -116,40 +119,140 @@ if ($page == 'long-form-content') {
         cursor: pointer;
         padding: 5px;
     }
+    #nextstep {
+        background: #3792c8;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        margin-bottom: 25px;
+        font-size: 20px;
+    }
+    #rw_ts_button{
+        background: #3792c8;
+    }
     div#rw_ts_save_button_wrapper {
         margin-bottom: 83px;
     }
-    label {
+    #newtitle label {
         font-size: 25px;
-    }
-    #response {
-        background: #fff;
-        border: 1px solid #dddada;
-        padding: 0px 16px;
-        cursor: pointer;
     }
     #blog_ideas {
         cursor: pointer;
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 10px;
+        align-items: center;
+        font-size: 14px;
+    }
+    #generate {
+        cursor: pointer;
         background: #2271b1;
         color: #fff;
-        padding: 1px;
-        width: 182px;
         text-align: center;
-        margin-top: 8px;
+        padding: 20px;
     }
-    #blog_ideas h3 {
+    #skip {
+        cursor: pointer;
+        background: #643e98;
         color: #fff;
-        font-size: 14px;
-        font-weight: unset;
+        text-align: center;
+        padding: 20px;
     }
+    #skip:hover {
+        background: #FFF;
+        color: #643e98;
+        border: 2px solid #643e98;
+    }
+    #generate:hover {
+        background: #FFF;
+        color: #2271b1;
+        border: 2px solid #2271b1;
+    }
+
     button#close {
         position: absolute;
         top: 115px;
         right: 0px;
+        display: none;
     }
     label#title-prompt-text {
         display: none;
     }
+    .nav-item.active {
+        border-bottom: 2px solid #2271b1;
+    }
+    #navbar {
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    .nav-item {
+        margin: 33px 20px;
+        padding: 9px 10px;
+        font-size: 17px;
+        text-decoration: none;
+        color: #3792c8;
+    }
+    #titlewrap{
+        display: none;
+    }
+    .step1{
+        text-align: center;
+    }
+    #blog_ideas_wrapper {
+        margin: auto;
+        text-align: center;
+    }
+    #response {
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 22px;
+        grid-row-gap: 22px;
+        margin: 0;
+        padding: 0;
+    }
+    .selecttitle {
+        border: 1px solid #f0f0f1;
+        padding: 25px;
+        background: #fbfbfb;
+        font-size: 21px;
+        box-shadow: 1px 2px 10px #979797;
+        margin: 0;
+    }
+    .selecttitle:hover {
+        background: #fff;
+        border: 1px solid #2271b1;
+        background: #2271b1;
+        color: #fff;
+    }
+    #edit-slug-box{
+        display: none;
+    }
+
+    #rw_ts_post_wrapper {
+        text-align: left;
+        font-size: 16px;
+        margin: 0px 60px;
+    }
+
+    #gentitle {
+        font-size: 27px;
+    }
+
+    #genintro {
+        margin-bottom: 20px;
+    }
+
+    #genbody {
+        margin-bottom: 20px;
+    }
+    /*#lfcboc {*/
+    /*    background-image: url(https://plugin-dev.local/wp-content/plugins/talentscribe/styles/../assets/background.png);*/
+    /*    background-size: cover;*/
+    /*    background-color: #fff;*/
+    /*}*/
+
 <!--    --><?php }
     ?>
 </style>
