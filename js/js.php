@@ -1,11 +1,17 @@
 <?php
-$page = $_GET['page'];
+//is page parameter exists and isset
+if (isset($_GET['page']) && !empty($_GET['page'])){
+    $page = $_GET['page'];
+} else {
+    $page = 'POST';
+}
 ?>
     <script>
         console.log('loaded')
 
         var servicekey = '';
 
+        setTimeout(function () {
         //While we wait from the response show a preloading image with a whole screen overlay
         jQuery(document).ready(function () {
 
@@ -68,7 +74,7 @@ $page = $_GET['page'];
 
 
         })
-
+        }, 500);
 
         var delayInMilliseconds = 500; //1 second
 
@@ -87,8 +93,6 @@ $page = $_GET['page'];
                     '<div id="prompt_options">' +
                     '<h3>Choose a prompt</h3>' +
                     <?php
-
-
                     if (get_post_type() == 'job_listing') {
                     ?>
                     //create a checkbox for a job description rewrite prompt
@@ -107,15 +111,12 @@ $page = $_GET['page'];
                     <?php }
                     else {
                     //do other stuff
-
-
                     $custom_prompts = get_option('rw-ts_custom_prompts');
                     if ($custom_prompts){
                     ?>
                     '<p style="text-decoration:underline;">My prompts</p>' +
                     //loop over custom prompts and create a checkbox for each one
                     <?php
-
                     $i = 0;
                     $custom_prompts = explode(";; ", $custom_prompts);
                     if ($custom_prompts) {
@@ -130,7 +131,6 @@ $page = $_GET['page'];
                     ?>
                     '<p><span class="dashicons dashicons-info"></span> Add saved prompts in the <a href="<?php echo admin_url('admin.php?page=rw-ts-settings'); ?>">Settings page.</a></p>' +
                     <?php }}
-
                     ?>
                     '<p style="text-decoration:underline;">Advanced Mode</p>' +
                     '<input type="checkbox" id="rw-ts-prompt-checkbox" name="rw-ts-prompt-checkbox" value="rw-ts-prompt-checkbox">' +
@@ -304,174 +304,16 @@ $page = $_GET['page'];
                         jQuery('#rw-ts-btn').text('Regenerate AI Content')
                         jQuery('#rw-ts-btn').prepend('<img src="<?php echo esc_url(plugins_url('../assets/RW.png', __FILE__)); ?>" style="width: 20px;margin-right: 10px;">')
 
-                        //if yoast id is on the page then run another call to get seo content
+                       //seo goes here
+
                         if (jQuery("#wpseo-metabox-root").length == 0) {
                             console.log('Not here')
+                            GetImage(servicekey, title, url)
 
                         } else {
-                            jQuery('#rw-ts-loading-seo').show()
-
-                            console.log('Here')
-                            //make an ajax call to get the seo content
-                            contentFromRewriter = response.choices[0].text
-
-                            prompt = 'Write a SEO meta description that is between 100-150 characters for this blog post:' + title
-                            jQuery.ajax({
-                                url: url,
-                                type: "POST",
-                                dataType: "json",
-                                contentType: "application/json",
-                                headers: {
-                                    Authorization: "Bearer " + servicekey,
-                                    contentType: "application/json",
-                                },
-                                data: JSON.stringify({
-                                    //if rw-ts-prompt-checkbox is checked then use it
-
-                                    prompt: prompt,
-                                    temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
-                                    //model: "<?php //echo str_replace(' ', '', get_option('rw-ts_language_model')); ?>//",
-                                    model: "text-davinci-003",
-                                    max_tokens: <?php echo get_option('rw-ts_rewriter_max_tokens'); ?>
-                                }),
-                                success: function (response) {
-                                    console.log(response)
-                                    //hide the loading screen
-                                    jQuery('#rw-ts-loading-seo').hide()
-                                    //remove the pulse class
-                                    jQuery('#rw-ts-loading img').removeClass('pulse')
-
-                                    jQuery('#imageheading').show()
-                                    jQuery('#next').show()
-
-                                    jQuery('#hcf_description').text(response.choices[0].text.replace("Meta description:", "").replace("Meta Description:", "").replace("\n\n", "").replace(" :", "").replace('"', ''))
-                                    jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
-                                    jQuery('#hcf_title').val(title)
-                                    jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
-
-                                    //on change of hcftitle change yoast title
-                                    jQuery('#hcf_title').on('change', function () {
-                                        jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
-                                    });
-                                    //on change of hcfdescription change yoast description
-                                    jQuery('#hcf_description').on('change', function () {
-                                        jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
-                                    });
-
-                                // end of success?
-                                    //end of the else?
-
-                                    prompt = "Return a single most important keyword or phrase for this blog post: " + title
-
-                                    //make an ajax request to openai to get keywords based on the content
-                                    var keywords = ''
-                                    var nextpage = ''
-                                    var prevpage = ''
-
-                                    jQuery.ajax({
-                                        url: url,
-                                        type: 'POST',
-                                        dataType: 'json',
-                                        contentType: "application/json",
-                                        headers: {
-                                            Authorization: "Bearer " + servicekey,
-                                            contentType: "application/json",
-                                        },
-                                        data: JSON.stringify({
-                                            prompt: prompt,
-                                            temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
-                                            model: "text-davinci-003",
-                                            max_tokens: <?php echo get_option('rw-ts_rewriter_max_tokens'); ?>,
-                                        }),
-                                        success: function (response) {
-                                            // console.log(response)
-                                            keywords = response.choices[0].text
-                                            keywords = keywords.replace("\n\n", "").replace(" :", "").replace("\n", "").replace(",", " ")
-                                            //remove everything except the keywords
-                                            console.log(keywords)
-
-                                            jQuery.ajax({
-                                                url: 'https://api.pexels.com/v1/search?query=' + keywords + '&orientation=landscape&size=medium&per_page=10',
-                                                type: 'GET',
-                                                dataType: 'json',
-                                                headers: {
-                                                    'Content-Type': 'application/json',
-                                                    'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
-                                                },
-                                                success: function (data) {
-                                                    //get next page url
-                                                    nextpage = data.next_page
-                                                    prevpage = data.prev_page
-                                                    console.log(data)
-                                                    //loop over response and add images to blog-image div
-                                                    for (var i = 0; i < 10; i++) {
-                                                        jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
-                                                    }
-                                                    //on click of next page button make another call to pexels api
-                                                    //on click of id next run code
-                                                    jQuery('#next').on("click", function () {
-                                                        //show prev button
-                                                        jQuery('#prev').show()
-                                                        jQuery('#blog-images img').remove()
-                                                        jQuery('.img-cont').remove()
-                                                        jQuery.ajax({
-                                                            url: nextpage,
-                                                            type: 'GET',
-                                                            dataType: 'json',
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                                'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
-                                                            },
-                                                            success: function (data) {
-                                                                //get next page url
-                                                                nextpage = data.next_page
-                                                                prevpage = data.prev_page
-                                                                console.log(data)
-                                                                //loop over response and add images to blog-image div
-                                                                for (var i = 0; i < 10; i++) {
-                                                                    jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
-                                                                }
-                                                            },
-                                                        })
-                                                    })
-
-                                                    //on click of prev page button make another call to pexels api
-                                                    //on click of id prev run code
-                                                    jQuery('#prev').on("click", function () {
-                                                        jQuery('#blog-images img').remove()
-                                                        jQuery('.img-cont').remove()
-                                                        jQuery.ajax({
-                                                            url: prevpage,
-                                                            type: 'GET',
-                                                            dataType: 'json',
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                                'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
-                                                            },
-                                                            success: function (data) {
-                                                                //get next page url
-                                                                nextpage = data.next_page
-                                                                prevpage = data.prev_page
-                                                                // console.log(data)
-                                                                //loop over response and add images to blog-image div
-                                                                for (var i = 0; i < 10; i++) {
-                                                                    jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
-                                                                }
-                                                            },
-                                                        })
-                                                    }) //end of onlick of Prev button
-
-                                                }, //end of success function from pexels api call
-                                            }) //end of pexels api call
-
-                                        } // end of success function from keyword call
-
-                                    }) //end of openai call to get keyword
-
-                                } // end of success function from seo description call
-                            }); //end of openai call to get SEO description
-
-                        } //end of yoast else
+                            GetSeo(servicekey, title, url)
+                            GetImage(servicekey, title, url)
+                        }
 
                     } //end of success function from openai call
                 }); //end of openai call to get title
@@ -494,7 +336,7 @@ $page = $_GET['page'];
         //     dataType: 'json',
         //     headers: {
         //         'Content-Type': 'application/json',
-        //         'Authorization': 'Bearer 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'
+        //         'Authorization': 'Bearer ' + servicekey,
         //     },
         //     data: JSON.stringify({
         //         model: "gpt-3.5-turbo",
@@ -505,6 +347,165 @@ $page = $_GET['page'];
         //     },
         // })
 
+        function GetSeo(servicekey,title,url){
+            console.log('GetSeo')
 
+            prompt = 'Write a SEO meta description that is no longer than 139 characters for this blog post:' + title
+            jQuery.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                headers: {
+                    Authorization: "Bearer " + servicekey,
+                    contentType: "application/json",
+                },
+                data: JSON.stringify({
+                    //if rw-ts-prompt-checkbox is checked then use it
 
+                    prompt: prompt,
+                    temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
+//model: "<?php //echo str_replace(' ', '', get_option('rw-ts_language_model')); ?>//",
+                    model: "text-davinci-003",
+                    max_tokens: <?php echo get_option('rw-ts_rewriter_max_tokens'); ?>
+                }),
+                success: function (response) {
+                    console.log(response)
+                    console.log('test from seo call')
+                    //hide the loading screen
+                    jQuery('#rw-ts-loading-seo').hide()
+                    //remove the pulse class
+                    jQuery('#rw-ts-loading img').removeClass('pulse')
+
+                    jQuery('#imageheading').show()
+                    jQuery('#next').show()
+
+                    jQuery('#hcf_description').text(response.choices[0].text.replace("Meta description:", "").replace("Meta Description:", "").replace("\n\n", "").replace(" :", "").replace('"', ''))
+                    jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
+                    jQuery('#hcf_title').val(title)
+                    jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
+
+                    //on change of hcftitle change yoast title
+                    jQuery('#hcf_title').on('change', function () {
+                        jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
+                    });
+                    //on change of hcfdescription change yoast description
+                    jQuery('#hcf_description').on('change', function () {
+                        jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
+                    });
+
+                }
+            })
+        }
+
+        function GetImage(servicekey,title,url){
+            console.log('GetImage')
+            prompt = "Return a single most important keyword or phrase for this blog post: " + title
+
+//make an ajax request to openai to get keywords based on the content
+            var keywords = ''
+            var nextpage = ''
+            var prevpage = ''
+
+            jQuery.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                headers: {
+                    Authorization: "Bearer " + servicekey,
+                    contentType: "application/json",
+                },
+                data: JSON.stringify({
+                    prompt: prompt,
+                    temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
+                    model: "text-davinci-003",
+                    max_tokens: <?php echo get_option('rw-ts_rewriter_max_tokens'); ?>,
+                }),
+                success: function (response) {
+                    // console.log(response)
+                    keywords = response.choices[0].text
+                    keywords = keywords.replace("\n\n", "").replace(" :", "").replace("\n", "").replace(",", " ")
+                    //remove everything except the keywords
+                    jQuery('#yoast_wpseo_focuskw').val(keywords)
+                    console.log(keywords)
+
+                    jQuery.ajax({
+                        url: 'https://api.pexels.com/v1/search?query=' + keywords + '&orientation=landscape&size=medium&per_page=10',
+                        type: 'GET',
+                        dataType: 'json',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
+                        },
+                        success: function (data) {
+                            //get next page url
+                            nextpage = data.next_page
+                            prevpage = data.prev_page
+                            console.log(data)
+                            //loop over response and add images to blog-image div
+                            for (var i = 0; i < 10; i++) {
+                                jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                            }
+                            //on click of next page button make another call to pexels api
+                            //on click of id next run code
+                            jQuery('#next').on("click", function () {
+                                //show prev button
+                                jQuery('#prev').show()
+                                jQuery('#blog-images img').remove()
+                                jQuery('.img-cont').remove()
+                                jQuery.ajax({
+                                    url: nextpage,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
+                                    },
+                                    success: function (data) {
+                                        //get next page url
+                                        nextpage = data.next_page
+                                        prevpage = data.prev_page
+                                        console.log(data)
+                                        //loop over response and add images to blog-image div
+                                        for (var i = 0; i < 10; i++) {
+                                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                                        }
+                                    },
+                                })
+                            })
+
+                            //on click of prev page button make another call to pexels api
+                            //on click of id prev run code
+                            jQuery('#prev').on("click", function () {
+                                jQuery('#blog-images img').remove()
+                                jQuery('.img-cont').remove()
+                                jQuery.ajax({
+                                    url: prevpage,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
+                                    },
+                                    success: function (data) {
+                                        //get next page url
+                                        nextpage = data.next_page
+                                        prevpage = data.prev_page
+                                        // console.log(data)
+                                        //loop over response and add images to blog-image div
+                                        for (var i = 0; i < 10; i++) {
+                                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                                        }
+                                    },
+                                })
+                            }) //end of onlick of Prev button
+
+                        }, //end of success function from pexels api call
+                    }) //end of pexels api call
+
+                } // end of success function from keyword call
+
+            }) //end of openai call to get keyword
+        }
     </script>

@@ -1,8 +1,5 @@
 <?php
-
 // Add settings page for plugin
-
-
 function add_rw_ts_settings_page()
 {
     add_options_page('rw-ts Settings', 'RW Talent Scribe', 'manage_options', 'rw-ts-settings', 'render_rw_ts_settings_page');
@@ -179,6 +176,21 @@ function render_rw_ts_settings_page()
 
                     </td>
                 </tr>
+
+                <tr>
+                <th scope="row">Company Summary:</th>
+                <td>
+
+                    <?php
+
+                    $rw_ts_company_summary = get_option( 'rw-ts_company_summary' );
+                    echo wp_editor( $rw_ts_company_summary, 'rw-ts_company_summary', array('textarea_name' => 'rw-ts_company_summary')  );
+
+
+                    ?>
+                </td>
+                </tr>
+
 
                                 <tr>
                                     <th scope="row">Industries:</th>
@@ -497,6 +509,7 @@ function register_rw_ts_settings()
     register_setting('rw-ts-settings-group', 'rw-ts_custom_prompt');
     register_setting('rw-ts-settings-group', 'rw-ts_custom_prompts');
     register_setting('rw-ts-settings-group', 'rw-ts_industries');
+    register_setting('rw-ts-settings-group', 'rw-ts_company_summary');
 
 
 }
