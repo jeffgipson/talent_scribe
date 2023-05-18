@@ -67,6 +67,9 @@ if ($page == 'long-form-content') {
                 jQuery('head').append('<style>@keyframes pulse {0% {transform: scale(1);}50% {transform: scale(1.1);}100% {transform: scale(1);}}</style>')
 // show the loading screen
                 jQuery('#rw-ts-titles-loading').show()
+                //add the pulse class to the image
+                jQuery('#rw-ts-titles-loading img').addClass('pulse')
+
 
                 var title = jQuery('#title').val();
                 var prompt = "Generate a JSON array of 10 unordered title options for this article:" + title;
@@ -141,6 +144,7 @@ if ($page == 'long-form-content') {
                 jQuery('head').append('<style>@keyframes pulse {0% {transform: scale(1);}50% {transform: scale(1.1);}100% {transform: scale(1);}}</style>')
 // show the loading screen
                 jQuery('#rw-ts-ideas-loading').show()
+                jQuery('#rw-ts-ideas-loading img').addClass('pulse')
 
                 <?php
                 //fetch the last 10 blog posts and return the titles put them into a comma separated string
@@ -257,6 +261,7 @@ if ($page == 'long-form-content') {
                     jQuery('head').append('<style>@keyframes pulse {0% {transform: scale(1);}50% {transform: scale(1.1);}100% {transform: scale(1);}}</style>')
 // show the loading screen
                     jQuery('#rw-ts-intro-loading').show()
+                    jQuery('#rw-ts-intro-loading img').addClass('pulse')
                     console.log('clicked')
                     //hide next button
                     jQuery('#nextstep').hide();
@@ -326,7 +331,7 @@ if ($page == 'long-form-content') {
                             //get the title
                             title = jQuery('#title').val();
                             var intro = jQuery('#opener').val();
-                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with headings."
+                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with bold headings."
                             var url = "https://api.openai.com/v1/completions"
                             jQuery.ajax({
                                 url: url,
@@ -379,7 +384,7 @@ if ($page == 'long-form-content') {
                                     intro = jQuery('#opener').val();
                                     //get the body
                                     var body = jQuery('#main_body').val();
-                                    var prompt = "We are continuing our blog post titled: " + title + " So far we have this body content: " + body + " Please write a conclusion for this article. Use 175 - 250 words."
+                                    var prompt = "We are continuing our blog post titled: " + title + " So far we have this body content: " + body + " Please write a conclusion for this article. Use 175 - 250 words. Do not use the words in conclusion or in summary."
                                     var url = "https://api.openai.com/v1/completions"
                                     jQuery.ajax({
                                         url: url,

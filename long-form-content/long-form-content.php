@@ -10,7 +10,14 @@ if ($page == 'long-form-content') {
 //add meta boxes to long-form-content post type
     function long_form_content_meta_boxes()
     {
-        add_meta_box('long-form-content-meta-box-id', 'Long Form Content Builder', 'lfc_display_callback', 'long-form-content', 'normal', 'high');
+        add_meta_box(
+            'long-form-content-meta-box-id',
+            'Long Form Content Builder',
+            'lfc_display_callback',
+            'long-form-content',
+            'normal',
+            'high'
+        );
     }
 
     add_action('add_meta_boxes', 'long_form_content_meta_boxes');
