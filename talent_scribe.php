@@ -43,3 +43,5 @@ require_once plugin_dir_path(__FILE__) . 'settings/settings.php';
 //include long form content php file
 require_once plugin_dir_path(__FILE__) . 'long-form-content/long-form-content.php';
 
+//force classic editor
+add_filter('use_block_editor_for_post', '__return_false', 10);
