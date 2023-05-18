@@ -41,9 +41,16 @@ function hcf_save_meta_box($post_id)
 
         }
 //        if hcf_image is set, then we need to set the featured image
-        if (array_key_exists('hcf_image', $_POST)) {
+       if (isset($_POST['hcf_image']))  {
 
-            $image_url = $_POST['hcf_image']; // Define the image URL here
+           //if $_POST['hcf_image'] is blank then set the featured image to the default image
+              if ($_POST['hcf_image'] == '') {
+                  $image_url = esc_url(plugins_url('/assets/default-image.png', __FILE__));
+              } else {
+                  $image_url = $_POST['hcf_image']; // Define the image URL here
+              }
+
+//            $image_url = $_POST['hcf_image']; // Define the image URL here
             $image_name = 'wp-header-logo.png';
             $upload_dir = wp_upload_dir(); // Set upload folder
             $image_data = file_get_contents($image_url); // Get image data

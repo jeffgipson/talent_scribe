@@ -296,7 +296,7 @@ if ($page == 'long-form-content') {
                             jQuery('#newtitle').append('<div id="rw_ts_post_wrapper" class="rw_ts_post_wrapper"><div id="gentitle">' + title + '</div><br><div id="genintro"></div></div>');
                             var i = 0;
                             var txt = response.choices[0]['text']
-                            var speed = 50;
+                            var speed = 15;
 
                             function typeWriter() {
                                 if (i < txt.length) {
@@ -402,7 +402,7 @@ if ($page == 'long-form-content') {
                                             jQuery('#rw_ts_post_wrapper').append('<div id="genconclude"></div>');
                                             var i = 0;
                                             var txt = response.choices[0]['text']
-                                            var speed = 50;
+                                            var speed = 15;
 
                                             function typeWriter() {
                                                 if (i < txt.length) {
