@@ -125,7 +125,7 @@ function render_rw_ts_settings_page()
                                     if (status == 'Active') {
                                         jQuery('#status').addClass('active')
                                         jQuery('#rw-ts-btn').html('My Account')
-                                        jQuery('#rw-ts-btn').prepend('<img src="<?php echo esc_url(plugins_url('../assets//RW.png', __FILE__)); ?>" style="width: 20px;margin-right: 10px;">')
+                                        //jQuery('#rw-ts-btn').prepend('<img src="<?php //echo esc_url(plugins_url('../assets//RW.png', __FILE__)); ?>//" style="width: 20px;margin-right: 10px;">')
                                         //set url to my account page
                                         jQuery('#btnlink').attr('href', 'https://app.recruiterswebsites.com/users/sign_in')
                                         jQuery('#of').show()
@@ -135,7 +135,7 @@ function render_rw_ts_settings_page()
                                         jQuery('#status').text('Inactive')
                                         jQuery('#of').hide()
                                         jQuery('#rw-ts-btn').html('Sign Up')
-                                        jQuery('#rw-ts-btn').prepend('<img src="<?php echo esc_url(plugins_url('../assets//RW.png', __FILE__)); ?>" style="width: 20px;margin-right: 10px;">')
+                                        //jQuery('#rw-ts-btn').prepend('<img src="<?php //echo esc_url(plugins_url('../assets//RW.png', __FILE__)); ?>//" style="width: 20px;margin-right: 10px;">')
                                         //set url to sign up page
                                         jQuery('#btnlink').attr('href', 'https://app.recruiterswebsites.com/pricing')
                                     }
