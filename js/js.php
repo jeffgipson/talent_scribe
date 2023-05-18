@@ -350,7 +350,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])){
         function GetSeo(servicekey,title,url){
             console.log('GetSeo')
 
-            prompt = 'Write a SEO meta description that is between 130-139 characters for this blog post:' + title
+            prompt = 'Write a SEO meta description that is no longer than 139 characters for this blog post:' + title
             jQuery.ajax({
                 url: url,
                 type: "POST",
@@ -388,7 +388,6 @@ if (isset($_GET['page']) && !empty($_GET['page'])){
                     //on change of hcftitle change yoast title
                     jQuery('#hcf_title').on('change', function () {
                         jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
-                        jQuery('#yoast_wpseo_focuskw').val(jQuery('#hcf_title').val())
                     });
                     //on change of hcfdescription change yoast description
                     jQuery('#hcf_description').on('change', function () {
@@ -428,6 +427,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])){
                     keywords = response.choices[0].text
                     keywords = keywords.replace("\n\n", "").replace(" :", "").replace("\n", "").replace(",", " ")
                     //remove everything except the keywords
+                    jQuery('#yoast_wpseo_focuskw').val(keywords)
                     console.log(keywords)
 
                     jQuery.ajax({
