@@ -107,6 +107,9 @@ if ($page == 'long-form-content') {
                             jQuery('.rw_ts_title_select').append('<option value="' + value + '">' + value + '</option>');
                             i++;
                         });
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
                     }
                 })
             });
@@ -227,6 +230,9 @@ if ($page == 'long-form-content') {
 
                         })
 
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
                     }
                 })
             })
@@ -461,10 +467,16 @@ if ($page == 'long-form-content') {
                                     })
 
 
+                                },
+                                error: function (request, status, error) {
+                                    alert(request.responseText);
                                 }
                             })
 
 
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
                         }
                     })
                 });

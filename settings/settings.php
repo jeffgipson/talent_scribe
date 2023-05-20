@@ -7,7 +7,6 @@ function add_rw_ts_settings_page()
 
 add_action('admin_menu', 'add_rw_ts_settings_page');
 
-
 //function add_rw_ts_signup_page()
 //{
 //    add_options_page('rw-ts Settings', 'Sign Up', 'manage_options', 'rw-ts-pricing', 'render_rw_ts_pricing_page');
@@ -40,6 +39,18 @@ function render_rw_ts_settings_page()
     ?>
 
     <style>
+        progress#file {
+            height: 26px;
+            width: 302px;
+            background: none;
+            margin-top: 10px;
+        }
+        progress#file::-webkit-progress-value {
+            background: linear-gradient(90deg, rgb(52 137 191) 0%, rgb(104 77 148) 100%);
+        }
+        #insert-media-button {
+            display: none;
+        }
         #wpcontent {
             background: #fff;
             /*background-image: url('https://recruiterswebsites.com/wp-content/plugins/rwchat../assets//background.png');*/
@@ -219,8 +230,10 @@ function render_rw_ts_settings_page()
                                             <option value="utilities">Utilities</option>
                                             <option value="wholesale trade">Wholesale Trade</option>
                                             <option value="other">Other</option>
+
                                         </select>
                                         <script>
+
                                             jQuery(document).ready(function() {
                                                 jQuery('.js-example-basic-multiple').select2(
                                                     {

@@ -5,14 +5,38 @@ if (isset($_GET['page']) && !empty($_GET['page'])){
 } else {
     $page = 'POST';
 }
+if (isset($_GET['page_type']) && !empty($_GET['page_type'])){
+    $page_type = $_GET['page_type'];
+} else {
+    $page_type = 'page_type';
+}
+//if page_type == long-form-content then remove current class
+if ($page_type == 'long-form-content'){
+    ?>
+   <script>
+    //if page_type == long-form-content then remove current class no jquery
+    document.addEventListener("DOMContentLoaded", function() {
+       //look for the current class
+         var current = document.getElementsByClassName('current');
+            //remove the current class
+            current[0].classList.remove('current');
+        //find the a href with text Content Builder
+        var content_builder = document.querySelector('a[href="edit.php?page=long-form-content"]');
+        //add the current class to the li parent with text Content Builder
+        content_builder.parentElement.classList.add('current');
+    });
+    </script>
+    <?php
+}
 ?>
     <script>
+
         console.log('loaded')
 
         var servicekey = '';
 
         setTimeout(function () {
-        //While we wait from the response show a preloading image with a whole screen overlay
+
         jQuery(document).ready(function () {
 
             //on click of the image, set the hidden field value to the image url
@@ -350,7 +374,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])){
         function GetSeo(servicekey,title,url){
             console.log('GetSeo')
 
-            prompt = 'Write a SEO meta description that is no longer than 139 characters for this blog post:' + title
+            prompt = 'Write a SEO meta description that is NO LONGER THAN 139 CHARACTERS! for this blog post:' + title
             jQuery.ajax({
                 url: url,
                 type: "POST",
@@ -400,7 +424,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])){
 
         function GetImage(servicekey,title,url){
             console.log('GetImage')
-            prompt = "Return a single most important keyword or phrase for this blog post: " + title
+            prompt = "Please return an unformatted list of the 5 most important keywords or phrase for this blog post: " + title + "DO NOT use numbers or bullets. Each word or phrase should be separated by a space"
 
 //make an ajax request to openai to get keywords based on the content
             var keywords = ''
@@ -423,11 +447,11 @@ if (isset($_GET['page']) && !empty($_GET['page'])){
                     max_tokens: <?php echo get_option('rw-ts_rewriter_max_tokens'); ?>,
                 }),
                 success: function (response) {
-                    // console.log(response)
+                     console.log(response)
                     keywords = response.choices[0].text
                     keywords = keywords.replace("\n\n", "").replace(" :", "").replace("\n", "").replace(",", " ")
                     //remove everything except the keywords
-                    jQuery('#yoast_wpseo_focuskw').val(keywords)
+                    jQuery('#yoast_wpseo_focuskw').val(keywords.replace('"', ''))
                     console.log(keywords)
 
                     jQuery.ajax({
@@ -439,6 +463,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])){
                             'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
                         },
                         success: function (data) {
+                            console.log(url)
                             //get next page url
                             nextpage = data.next_page
                             prevpage = data.prev_page
