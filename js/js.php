@@ -402,6 +402,8 @@ if ($page_type == 'long-form-content'){
                     jQuery('#rw-ts-loading img').removeClass('pulse')
 
                     jQuery('#imageheading').show()
+                    //append a search input and button after the image heading
+
                     jQuery('#next').show()
 
                     jQuery('#hcf_description').text(response.choices[0].text.replace("Meta description:", "").replace("Meta Description:", "").replace("\n\n", "").replace(" :", "").replace('"', ''))
@@ -424,6 +426,26 @@ if ($page_type == 'long-form-content'){
 
         function GetImage(servicekey,title,url){
             console.log('GetImage')
+
+           //if the search doesnt exist then append it
+            if(!jQuery('#search').length){
+                jQuery('#imageheading').after('<div><input type="text" id="search" placeholder="Search for an image" style="width: 90%;margin-right: 10px;"><button id="searchbtn">Search</button></div>')
+                //stop the serach from submitting the form
+                jQuery('#searchbtn').on('click', function (e) {
+                    e.preventDefault()
+                    //remove all  the img-cont divs
+                    jQuery('.img-cont').remove()
+
+                })
+                //on click of the search button run a pelxels search and display the results
+                jQuery('#searchbtn').on('click', function () {
+                    //get the value of the search input
+                    var search = jQuery('#search').val()
+                    //call the pexels api
+                    GetImage(servicekey, search, url)
+                })  }
+
+
             prompt = "Please return an unformatted list of the 5 most important keywords or phrase for this blog post: " + title + "DO NOT use numbers or bullets. Each word or phrase should be separated by a space"
 
 //make an ajax request to openai to get keywords based on the content

@@ -90,6 +90,7 @@ div#rwgpt {
     cursor: pointer;
     padding: 5px;
     float: right;
+    margin-top: 10px;
 }
 
 #prev {
@@ -98,5 +99,18 @@ div#rwgpt {
     border: none;
     cursor: pointer;
     padding: 5px;
+    margin-top: 10px;
+}
+
+#searchbtn {
+    background: linear-gradient(90deg, rgb(52 137 191) 0%, rgb(104 77 148) 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 10px;
+}
+input#search {
+    margin: 10px 0;
 }
 </style>

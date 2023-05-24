@@ -49,3 +49,7 @@ add_filter('use_block_editor_for_post', '__return_false', 10);
 
 //check github releases for updates to plugin
 require 'plugin-update-checker.php';
+
+//require beaverbuilder support
+require_once plugin_dir_path(__FILE__) . 'beaverbuilder/beaverbuilder.php';
+
