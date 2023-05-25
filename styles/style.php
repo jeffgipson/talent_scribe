@@ -100,6 +100,7 @@ div#rwgpt {
     cursor: pointer;
     padding: 5px;
     margin-top: 10px;
+    float: left;
 }
 
 #searchbtn {

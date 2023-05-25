@@ -661,6 +661,11 @@ function OnlyImages(search) {
         }, //end of success function from pexels api call
     }) //end of pexels api call
 }
+           //show next and prev buttons
+              jQuery('#next').show()
+              jQuery('#prev').show()
+
+
 
            OnlyImages('Modern Office')
             }, 500);
