@@ -555,4 +555,116 @@ if ($page_type == 'long-form-content'){
 
             }) //end of openai call to get keyword
         }
+
     </script>
+
+<?php
+//if the post has a post id then run the code
+if (isset($_GET['post'])) {
+    ?>
+
+   <script>
+       var search = ''
+       setTimeout(function () {
+           if(!jQuery('#search').length){
+               jQuery('#imageheading').after('<div><input type="text" id="search" placeholder="Search for an image" style="width: 90%;margin-right: 10px;"><button id="searchbtn">Search</button></div>')
+               //stop the serach from submitting the form
+               jQuery('#searchbtn').on('click', function (e) {
+                   console.log('clicked')
+                   e.preventDefault()
+                   //remove all  the img-cont divs
+                   jQuery('.img-cont').remove()
+
+               })
+               //on click of the search button run a pelxels search and display the results
+               jQuery('#searchbtn').on('click', function () {
+                   //get the value of the search input
+                    search = jQuery('#search').val()
+                   //call the pexels api
+                   OnlyImages(search)
+               })  }
+       //js set timeout function
+function OnlyImages(search) {
+
+    jQuery.ajax({
+        url: 'https://api.pexels.com/v1/search?query=' + search +'&orientation=landscape&size=medium&per_page=10',
+        type: 'GET',
+        dataType: 'json',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
+        },
+        success: function (data) {
+
+            //get next page url
+            nextpage = data.next_page
+            prevpage = data.prev_page
+            console.log(data)
+            //loop over response and add images to blog-image div
+            for (var i = 0; i < 10; i++) {
+                jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+            }
+            //on click of next page button make another call to pexels api
+            //on click of id next run code
+            jQuery('#next').on("click", function () {
+                //show prev button
+                jQuery('#prev').show()
+                jQuery('#blog-images img').remove()
+                jQuery('.img-cont').remove()
+                jQuery.ajax({
+                    url: nextpage,
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
+                    },
+                    success: function (data) {
+                        //get next page url
+                        nextpage = data.next_page
+                        prevpage = data.prev_page
+                        console.log(data)
+                        //loop over response and add images to blog-image div
+                        for (var i = 0; i < 10; i++) {
+                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                        }
+                    },
+                })
+            })
+
+            //on click of prev page button make another call to pexels api
+            //on click of id prev run code
+            jQuery('#prev').on("click", function () {
+                jQuery('#blog-images img').remove()
+                jQuery('.img-cont').remove()
+                jQuery.ajax({
+                    url: prevpage,
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'UH5Ye7s1xiQZBsIIkCiVPfAReSPHuXYmH3i0b0NroOOzBtqDDXKrIfHt'
+                    },
+                    success: function (data) {
+                        //get next page url
+                        nextpage = data.next_page
+                        prevpage = data.prev_page
+                        // console.log(data)
+                        //loop over response and add images to blog-image div
+                        for (var i = 0; i < 10; i++) {
+                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                        }
+                    },
+                })
+            }) //end of onlick of Prev button
+
+        }, //end of success function from pexels api call
+    }) //end of pexels api call
+}
+
+           OnlyImages('Modern Office')
+            }, 500);
+
+
+   </script>
+<?php }
