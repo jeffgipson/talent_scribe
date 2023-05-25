@@ -47,6 +47,7 @@ function hcf_save_meta_box($post_id)
             update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
 
         }
+    }
 //        if hcf_image is set, then we need to set the featured image
        if (isset($_POST['hcf_image']))  {
 
@@ -58,7 +59,11 @@ function hcf_save_meta_box($post_id)
               }
 
 //            $image_url = $_POST['hcf_image']; // Define the image URL here
-            $image_name = 'wp-header-logo.png';
+           //get post title
+              $post_title = get_the_title($post_id);
+              //convert post title to slug
+                $post_slug = sanitize_title($post_title);
+            $image_name = $post_slug.'.png';
             $upload_dir = wp_upload_dir(); // Set upload folder
             $image_data = file_get_contents($image_url); // Get image data
             $unique_file_name = wp_unique_filename($upload_dir['path'], $image_name); // Generate unique name
@@ -101,7 +106,7 @@ function hcf_save_meta_box($post_id)
             set_post_thumbnail($post_id, $attach_id);
 
         }
-    }
+
 }
 
 add_action('save_post', 'hcf_save_meta_box');
