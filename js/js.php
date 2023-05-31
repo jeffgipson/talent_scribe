@@ -98,7 +98,7 @@ if ($page_type == 'long-form-content'){
 
 
         })
-        }, 500);
+        }, 750);
 
         var delayInMilliseconds = 500; //1 second
 

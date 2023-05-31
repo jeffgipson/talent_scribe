@@ -165,7 +165,7 @@ if ($page == 'long-form-content') {
                 var past_blogs = "<?php echo $titles; ?>"
                 var site_name = "<?php echo get_bloginfo('name'); ?>"
                 var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
-                var prompt = "Generate a JSON with ideas for post title for 10 blog posts for " + site_name + " based on this summary: " + company_summary + ". The Last 10 blog posts were: " + past_blogs + "They shouldnt be too similar to the last 10 blog posts but should be relevant to " + site_name + "."
+                var prompt = "Generate a JSON array with ideas for post title for 10 blog posts for " + site_name + " based on this summary: " + company_summary + ". The Last 10 blog posts were: " + past_blogs + "They shouldnt be too similar to the last 10 blog posts but should be relevant to " + site_name + "."
                 var url = "https://api.openai.com/v1/completions"
                 jQuery.ajax({
                     url: url,

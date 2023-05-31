@@ -1,31 +1,7 @@
 <?php
-add_action('wp_footer', 'add_textarea_button');
+function my_text_button_enqueue_scripts() {
+wp_enqueue_script('my-text-button-script', plugins_url('/beaverbuilder/js/my-text-button.js', __FILE__), array('jquery', 'fl-builder'), '1.0', true);
 
-function add_textarea_button() {
-    if (!class_exists('FLBuilderModel')) {
-        return;
-    }
-
-    $current_post_id = FLBuilderModel::get_post_id();
-    if (FLBuilderModel::is_builder_enabled()) {
-        ?>
-
-        <script>
-            console.log('beaverbuilder.php');
-            jQuery(document).ready(function() {
-                var buttonHtml = '<button type="button" class="insert-emoji-btn">Insert Emoji</button>';
-
-                jQuery('.fl-builder-content[data-post-id="' + <?php echo $current_post_id; ?> + '"] textarea').each(function() {
-                    jQuery(this).after(buttonHtml);
-                });
-
-                jQuery('.insert-emoji-btn').on('click', function() {
-                    alert('Emoji button clicked!');
-                    // add your function here to insert the emoji
-                });
-            });
-        </script>
-
-        <?php
-    }
 }
+
+add_action('admin_enqueue_scripts', 'my_text_button_enqueue_scripts');
