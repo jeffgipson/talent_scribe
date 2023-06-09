@@ -122,7 +122,7 @@ function hcf_save_meta_box($post_id)
 // And finally assign featured image to post
         set_post_thumbnail($post_id, $attach_id);
 
-        update_post_meta($attach_id, '_wp_attachment_image_alt', 'Image alt text');
+        update_post_meta($attach_id, '_wp_attachment_image_alt', $post_title);
 
 
     }
