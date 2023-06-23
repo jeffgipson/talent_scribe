@@ -392,7 +392,7 @@ if ($page == 'long-form-content') {
                                     //get the body
                                     var body = jQuery('#main_body').val();
                                     var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
-                                    var prompt = "Please use this company summary for reference:" + company_summary + " We are continuing our blog post titled: " + title + " So far we have this content: " + intro + ' ' + body + " Please conclude the article with unique content and include information about our companies area of focus. When writing the conclusion please evaluate the existing content and summarize the main points but DO NOT repeat the same words or phrases. DO NOT use these words: 'in conclusion' or 'in summary' or 'in this blog' or 'in this article'. ";
+                                    var prompt = "Please use this company summary for reference:" + company_summary + " We are continuing our blog post titled: " + title + " So far we have this content: " + intro + ' ' + body + " Please conclude the article with unique content and include information about our companies area of focus. In this conclusion, please evaluate the existing content and summarize the main points but DO NOT repeat the same words or phrases. DO NOT use these words: 'in conclusion' or 'in summary' or 'in this blog' or 'in this article'. ";
                                     var url = "https://api.openai.com/v1/completions"
                                     jQuery.ajax({
                                         url: url,
@@ -451,7 +451,7 @@ if ($page == 'long-form-content') {
                                             var entire_post = intro + body + conclusion;
 
                                             // send the entire post back to openai with ajax
-                                            var prompt = "Please evaluate this blog post titled:" + title + " . The post has 3 main section: the Introduction:" + intro + " , the body:" + body + " and the conclusion:" + conclusion + ". Rewrite and reformat and return with rich text and html with bold headings. Please remove any repetition. The final blog post should be 800 - 1200 words. Remove any unnecessary words in order to keep on topic and stop repeating the same content.  ";
+                                            var prompt = "Please evaluate this blog post titled:" + title + " . The post has 3 main section: the Introduction:" + intro + " , the body:" + body + " and the conclusion:" + conclusion + ". Rewrite and reformat and return with rich text and html with bold headings. Please remove any repetition. The final blog post should be 800 - 1200 words. Remove any unnecessary paragraphs in order to keep on topic and stop repeating the same content.  ";
                                             jQuery.ajax({
                                                 url: url,
                                                 type: 'POST',
