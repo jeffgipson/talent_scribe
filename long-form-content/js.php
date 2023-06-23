@@ -281,7 +281,8 @@ if ($page == 'long-form-content') {
                     //on click of the button to generate intro content
                     console.log('clicked button')
                     var title = jQuery('#title').val();
-                    var prompt = "We are going to create a blog post. Here is the title: " + title + " Please write an introduction paragraph use 175 - 250 words.";
+                    var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
+                    var prompt = "Just to give you some background information: " + company_summary + " We are going to create a blog post. Here is the title: " + title + " Please write an introduction paragraph use 175 - 250 words. This will not be the entire blog post, just the introduction. Our company should not be the main focus but rather we are looking to provide value to our website users so you do not need to use the background information I gave I about us its just for reference. DO NOT use these words: 'in this blog' or 'in this blog post' or 'in this article'. I will ask you to create the rest of the blog post in the next prompt.";
                     var url = "https://api.openai.com/v1/completions"
                     jQuery.ajax({
                         url: url,
@@ -337,7 +338,7 @@ if ($page == 'long-form-content') {
                             //get the title
                             title = jQuery('#title').val();
                             var intro = jQuery('#opener').val();
-                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with bold headings."
+                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with bold headings(use html bold tags and insure new lines for headings) DO NOT repeat content from the introduction but rather continue where the intro left off Keep the phrase different DO NOT repeat the same information from the intro. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence. I will ask you to create the conclusion in the next prompt.";
                             var url = "https://api.openai.com/v1/completions"
                             jQuery.ajax({
                                 url: url,
@@ -390,7 +391,8 @@ if ($page == 'long-form-content') {
                                     intro = jQuery('#opener').val();
                                     //get the body
                                     var body = jQuery('#main_body').val();
-                                    var prompt = "We are continuing our blog post titled: " + title + " So far we have this body content: " + body + " Please write a conclusion for this article. Use 175 - 250 words. Do not use the words in conclusion or in summary."
+                                    var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
+                                    var prompt = "Please use this company summary for reference:" + company_summary + " We are continuing our blog post titled: " + title + " So far we have this content: " + intro + ' ' + body + " Please conclude the article with unique content and include information about our companies area of focus. When writing the conclusion please evaluate the existing content and summarize the main points but DO NOT repeat the same words or phrases. DO NOT use these words: 'in conclusion' or 'in summary' or 'in this blog' or 'in this article'. ";
                                     var url = "https://api.openai.com/v1/completions"
                                     jQuery.ajax({
                                         url: url,
@@ -448,24 +450,51 @@ if ($page == 'long-form-content') {
                                             var conclusion = jQuery('#conclusion').val();
                                             var entire_post = intro + body + conclusion;
 
-                                            console.log(entire_post)
-                                            jQuery('#content').val(entire_post);
-                                            jQuery('#content-tmce').click()
+                                            // send the entire post back to openai with ajax
+                                            var prompt = "Please evaluate this blog post titled:" + title + " . The post has 3 main section: the Introduction:" + intro + " , the body:" + body + " and the conclusion:" + conclusion + ". Rewrite and reformat and return with rich text and html with bold headings. Please remove any repetition. The final blog post should be 800 - 1200 words.";
+                                            jQuery.ajax({
+                                                url: url,
+                                                type: 'POST',
+                                                dataType: 'json',
+                                                contentType: "application/json",
+                                                headers: {
+                                                    Authorization: "Bearer " + servicekey,
+                                                    contentType: "application/json",
+                                                },
+                                                data: JSON.stringify({
+                                                    prompt: prompt,
+                                                    temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
+                                                    model: "text-davinci-003",
+                                                    max_tokens: 3000,
+                                                }),
+                                                success: function (response) {
+                                                    console.log(response)
+                                                    entire_post = response.choices[0]['text']
 
-                                            jQuery('.nav-item').css('color', '#e9e9e9');
-                                            jQuery('.seo-nav').css('color', '#3792c8');
+                                                    console.log(entire_post)
+                                                    jQuery('#content').val(entire_post);
+                                                    jQuery('#content-tmce').click()
 
-                                            GetSeo(servicekey, title, url)
+                                                    jQuery('.nav-item').css('color', '#e9e9e9');
+                                                    jQuery('.seo-nav').css('color', '#3792c8');
 
-                                            jQuery('.nav-item').css('color', '#e9e9e9');
-                                            jQuery('.image-nav').css('color', '#3792c8');
-                                            jQuery('#rw-ts-intro-loading').hide();
+                                                    GetSeo(servicekey, title, url)
 
-                                            GetImage(servicekey, title, url)
+                                                    jQuery('.nav-item').css('color', '#e9e9e9');
+                                                    jQuery('.image-nav').css('color', '#3792c8');
+                                                    jQuery('#rw-ts-intro-loading').hide();
 
+                                                    GetImage(servicekey, title, url)
+
+                                                }
+                                            })
+
+
+                                        },
+                                        error: function (request, status, error) {
+                                            alert(request.responseText);
                                         }
                                     })
-
 
                                 },
                                 error: function (request, status, error) {
@@ -488,7 +517,7 @@ if ($page == 'long-form-content') {
             });
 
 
-        }, 500);
+        }, 750);
 
     </script>
     <?php
