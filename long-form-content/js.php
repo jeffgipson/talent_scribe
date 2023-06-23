@@ -338,7 +338,7 @@ if ($page == 'long-form-content') {
                             //get the title
                             title = jQuery('#title').val();
                             var intro = jQuery('#opener').val();
-                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with bold headings(use html bold tags and insure new lines for headings) DO NOT repeat content from the introduction but rather continue where the intro left off Keep the phrase different DO NOT repeat the same information from the intro. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence. I will ask you to create the conclusion in the next prompt.";
+                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with bold headings(use html bold tags and insure new lines for headings) DO NOT repeat content from the introduction but rather continue where the intro left off Keep the phrase different DO NOT repeat the same information from the intro. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence. DO NOT write a conclusion yet I will ask you to create the conclusion in the next prompt.";
                             var url = "https://api.openai.com/v1/completions"
                             jQuery.ajax({
                                 url: url,
