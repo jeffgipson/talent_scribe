@@ -451,7 +451,7 @@ if ($page == 'long-form-content') {
                                             var entire_post = intro + body + conclusion;
 
                                             // send the entire post back to openai with ajax
-                                            var prompt = "Please evaluate this blog post titled:" + title + " . The post has 3 main section: the Introduction:" + intro + " , the body:" + body + " and the conclusion:" + conclusion + ". Rewrite and reformat and return with rich text and html with bold headings. Please remove any repetition. The final blog post should be 800 - 1200 words.";
+                                            var prompt = "Please evaluate this blog post titled:" + title + " . The post has 3 main section: the Introduction:" + intro + " , the body:" + body + " and the conclusion:" + conclusion + ". Rewrite and reformat and return with rich text and html with bold headings. Please remove any repetition. The final blog post should be 800 - 1200 words. Remove any unnecessary words in order to keep on topic and stop repeating the same content.  ";
                                             jQuery.ajax({
                                                 url: url,
                                                 type: 'POST',
