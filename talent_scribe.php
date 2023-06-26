@@ -3,7 +3,7 @@
 Plugin Name: RW Talent Scribe
 Plugin URI: https://recruiterswebsites.com
 Description: This plugin will generate AI content for blog posts
-Version: 1.0.7.1.8
+Version: 1.0.7.1.9
 Author: Recruiters Websites
 Author URI: https://recruiterswebsites.com
 License: GPLv2 or later
