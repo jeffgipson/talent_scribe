@@ -474,7 +474,7 @@ if ($page == 'long-form-content') {
                                                     prompt: prompt,
                                                     temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
                                                     model: "text-davinci-003",
-                                                    max_tokens: 3000,
+                                                    max_tokens: 2800,
                                                 }),
                                                 success: function (response) {
                                                     console.log(response)
