@@ -282,7 +282,8 @@ if ($page == 'long-form-content') {
                     console.log('clicked button')
                     var title = jQuery('#title').val();
                     var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
-                    var prompt = "Just to give you some background information: " + company_summary + " We are going to create a blog post. Here is the title: " + title + " Please write an introduction paragraph use 175 - 250 words. This will not be the entire blog post, just the introduction. Our company should not be the main focus but rather we are looking to provide value to our website users so you do not need to use the background information I gave I about us its just for reference. DO NOT use these words: 'in this blog' or 'in this blog post' or 'in this article'. I will ask you to create the rest of the blog post in the next prompt.";
+                    // var prompt = "Just to give you some background information: " + company_summary + " We are going to create a blog post. Here is the title: " + title + " Please write an introduction paragraph use 175 - 250 words. This will not be the entire blog post, just the introduction. Our company should not be the main focus but rather we are looking to provide value to our website users so you do not need to use the background information I gave I about us its just for reference. DO NOT use these words: 'in this blog' or 'in this blog post' or 'in this article'. I will ask you to create the rest of the blog post in the next prompt.";
+                    var prompt = "Just to give you some background information: " + company_summary + " We are going to create an informative blog post. Here is the title: " + title + " Please write a detailed outline for this blog post. Our company should not be the main focus but rather we are looking to provide value to our website users so you do not need to use the background information I gave I about us its just for reference. I will ask you to create the rest of the blog post in the next prompt.";
                     var url = "https://api.openai.com/v1/completions"
                     jQuery.ajax({
                         url: url,
@@ -297,7 +298,7 @@ if ($page == 'long-form-content') {
                             prompt: prompt,
                             temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
                             model: "text-davinci-003",
-                            max_tokens: <?php echo get_option('rw-ts_rewriter_max_tokens'); ?>,
+                            max_tokens: 3000,
                         }),
                         success: function (response) {
                             console.log(response)
@@ -338,7 +339,9 @@ if ($page == 'long-form-content') {
                             //get the title
                             title = jQuery('#title').val();
                             var intro = jQuery('#opener').val();
-                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with bold headings(use html bold tags and insure new lines for headings) DO NOT repeat content from the introduction but rather continue where the intro left off Keep the phrase different DO NOT repeat the same information from the intro. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence. DO NOT write a conclusion yet I will ask you to create the conclusion in the next prompt.";
+                            // var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with bold headings(use html bold tags and insure new lines for headings) DO NOT repeat content from the introduction but rather continue where the intro left off Keep the phrase different DO NOT repeat the same information from the intro. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence. DO NOT write a conclusion yet I will ask you to create the conclusion in the next prompt.";
+                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this outline: " + intro + " Please write a 800 - 1200 word blog post from the outline we created. DO NOT repeat content Keep the phrase different. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence.";
+
                             var url = "https://api.openai.com/v1/completions"
                             jQuery.ajax({
                                 url: url,
@@ -392,7 +395,8 @@ if ($page == 'long-form-content') {
                                     //get the body
                                     var body = jQuery('#main_body').val();
                                     var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
-                                    var prompt = "Please use this company summary for reference:" + company_summary + " We are continuing our blog post titled: " + title + " So far we have this content: " + intro + ' ' + body + " Please conclude the article with unique content and include information about our companies area of focus. DO NOT repeat the same words or phrases. DO NOT use these words: 'in conclusion' or 'in summary' or 'in this blog' or 'in this article'. ";
+                                    // var prompt = "Please use this company summary for reference:" + company_summary + " We are continuing our blog post titled: " + title + " So far we have this content: " + intro + ' ' + body + " Please conclude the article with unique content and include information about our companies area of focus. DO NOT repeat the same words or phrases. DO NOT use these words: 'in conclusion' or 'in summary' or 'in this blog' or 'in this article'. ";
+                                    var prompt = "Now that we have our blog post written: +" + body " Please rewrite the post using html mark up with bold headings with h tags and parapgraph tags but do not change the content unless you see any issues";
                                     var url = "https://api.openai.com/v1/completions"
                                     jQuery.ajax({
                                         url: url,
@@ -407,7 +411,7 @@ if ($page == 'long-form-content') {
                                             prompt: prompt,
                                             temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
                                             model: "text-davinci-003",
-                                            max_tokens: 2500,
+                                            max_tokens: 3000,
                                         }),
                                         success: function (response) {
                                             console.log(response)
@@ -452,7 +456,8 @@ if ($page == 'long-form-content') {
 
                                             // send the entire post back to openai with ajax
                                             //  var prompt = "Please evaluate this blog post titled:" + title + " . The post has 3 main section: the Introduction:" + intro + " , the body:" + body + " and the conclusion:" + conclusion + ". Rewrite, reformat the entire post and return with rich text and html with bold headings. Please remove any repetition and insure a great reader experience by staying on topic and not repeating content. DO NOT print the post title at the top. The final blog post MUST be 800 - 1200 words ";
-                                            var prompt = "We are developing an educational and informative blog post titled: '" + title + "'. Drawing from our extensive collaborative session, we have crafted the following content: " + intro + " " + body + " " + conclusion + ". Imagine yourself as a seasoned executive recruiter and transform this into a captivating blog post using rich text and HTML formatting, integrating eye-catching headings. Our primary objective is to provide valuable insights while maintaining a focused discussion and avoiding content repetition. Please note that the final blog post MUST contain 800 to 1200 words, with only 1% of the content dedicated to showcasing our company towards the end. Exclude the title of the post at the beginning. ";
+                                            // var prompt = "We are developing an educational and informative blog post titled: '" + title + "'. Drawing from our extensive collaborative session, we have crafted the following content: " + intro + " " + body + " " + conclusion + ". Imagine yourself as a seasoned executive recruiter and transform this into a captivating blog post using rich text and HTML formatting, integrating eye-catching headings. Our primary objective is to provide valuable insights while maintaining a focused discussion and avoiding content repetition. Please note that the final blog post MUST contain 800 to 1200 words, with only 1% of the content dedicated to showcasing our company towards the end. Exclude the title of the post at the beginning. ";
+                                            var prompt = "We are developing an educational and informative blog post titled: '" + title + "'. Here is the content so far" + conclusion + ". Can you please evaluate the blog post and add at least 1 relevant outbound links using html mark up";
                                             // var prompt = "Write a blog post where you imagine yourself as a reader seeking valuable insights on executive recruitment, job searches, best hiring practices and HR related topics, and prepare to embark on an enlightening journey through this thoughtfully curated blog post. Titled '" + title + "', this article has been meticulously crafted to provide you with expert knowledge and actionable advice. Let's explore the following sections: " + intro + " " + body + " " + conclusion + ". Through the effective utilization of rich text and HTML formatting, which includes bold headings, we aim to deliver an educational and captivating experience tailored specifically to you. We remain committed to a focused discussion, avoiding any content repetition and ensuring coherence throughout. The final blog post will span between 800 and 1200 words, with just 1% of the content dedicated to discussing our company. Let us embark on this enlightening journey together, refraining from explicitly repeating the title.";
 
                                             // var prompt = "We are writing a blog post titled:" + title + " . Based on our brainstorming this is what we have so far: " + intro + " " + body + " " + conclusion + ". Pretend your an executive recruiter and turn this into a blog post with rich text and html with bold headings. Please use synonyms and rewrite phrases and sentence to remove any repetition and insure a great reader experience by staying on topic and not repeating content. The post should be 99% educational and informative and 1% about us toward the end. DO NOT print the post title at the top. The final blog post MUST BE 800 - 1200 words ";
