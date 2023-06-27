@@ -340,7 +340,7 @@ if ($page == 'long-form-content') {
                             title = jQuery('#title').val();
                             var intro = jQuery('#opener').val();
                             // var prompt = "We are continuing our blog post titled: " + title + " So far we have this introduction paragraph: " + intro + " Please write the body of the article. Use 400 - 600 words in 3-5 paragraphs with bold headings(use html bold tags and insure new lines for headings) DO NOT repeat content from the introduction but rather continue where the intro left off Keep the phrase different DO NOT repeat the same information from the intro. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence. DO NOT write a conclusion yet I will ask you to create the conclusion in the next prompt.";
-                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this outline: " + intro + " Please write a 800 - 1200 word blog post from the outline we created. DO NOT repeat content Keep the phrase different. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence.";
+                            var prompt = "We are continuing our blog post titled: " + title + " So far we have this outline: " + intro + " Please write a 800 - 1200 word blog post from the outline we created. DO NOT repeat content Keep the phrase different. DO NOT use the same words and phrases over and over again. Use synonyms or rephrase the sentence. DO NOT Keep headings with Introduction or conclusion instead rewrite them to be descriptive.";
 
                             var url = "https://api.openai.com/v1/completions"
                             jQuery.ajax({
@@ -396,7 +396,7 @@ if ($page == 'long-form-content') {
                                     var body = jQuery('#main_body').val();
                                     var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
                                     // var prompt = "Please use this company summary for reference:" + company_summary + " We are continuing our blog post titled: " + title + " So far we have this content: " + intro + ' ' + body + " Please conclude the article with unique content and include information about our companies area of focus. DO NOT repeat the same words or phrases. DO NOT use these words: 'in conclusion' or 'in summary' or 'in this blog' or 'in this article'. ";
-                                    var prompt = "Now that we have our blog post written: +" + body + " Please rewrite the post using html mark up with bold headings with h tags and parapgraph tags but do not change the content unless you see any issues";
+                                    var prompt = "Now that we have our blog post written: +" + body + " Please rewrite the post using html mark up with bold headings with h tags and p tags but do not change the content unless you see any issues. Insure the post is between 800 - 1200 words";
                                     var url = "https://api.openai.com/v1/completions"
                                     jQuery.ajax({
                                         url: url,
