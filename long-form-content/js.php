@@ -396,7 +396,7 @@ if ($page == 'long-form-content') {
                                     var body = jQuery('#main_body').val();
                                     var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
                                     // var prompt = "Please use this company summary for reference:" + company_summary + " We are continuing our blog post titled: " + title + " So far we have this content: " + intro + ' ' + body + " Please conclude the article with unique content and include information about our companies area of focus. DO NOT repeat the same words or phrases. DO NOT use these words: 'in conclusion' or 'in summary' or 'in this blog' or 'in this article'. ";
-                                    var prompt = "Now that we have our blog post written: +" + body " Please rewrite the post using html mark up with bold headings with h tags and parapgraph tags but do not change the content unless you see any issues";
+                                    var prompt = "Now that we have our blog post written: +" + body + " Please rewrite the post using html mark up with bold headings with h tags and parapgraph tags but do not change the content unless you see any issues";
                                     var url = "https://api.openai.com/v1/completions"
                                     jQuery.ajax({
                                         url: url,
