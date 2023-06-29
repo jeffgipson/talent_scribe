@@ -558,15 +558,15 @@ if ($page == 'long-form-content') {
                                                     jQuery('.nav-item').css('color', '#e9e9e9');
                                                     jQuery('.seo-nav').css('color', '#3792c8');
 
-                                                    GetSeo(servicekey, title, url)
+                                                    GetSeo(servicekey, title, url, true)
 
                                                     jQuery('.nav-item').css('color', '#e9e9e9');
                                                     jQuery('.image-nav').css('color', '#3792c8');
                                                     jQuery('#rw-ts-intro-loading').hide();
 
-                                                    GetImage(servicekey, title, url)
+                                                    // GetImage(servicekey, title, url)
 
-                                                    jQuery('#save-post').click();
+
 
                                                 }
                                             })
