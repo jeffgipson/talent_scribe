@@ -609,20 +609,4 @@ if ($page == 'long-form-content') {
 }
 ?>
 
-<script>
 
-    setTimeout(function () {
-
-        jQuery( document ).ready(function() {
-            var url_string = window.location.href;
-            var url = new URL(url_string);
-            var c = url.searchParams.get("action");
-
-            if (c == 'edit') {
-                jQuery('#search').val(jQuery('#title').val())
-                jQuery('#searchbtn').click()
-            }
-        });
-    }, 750);
-
-</script>
