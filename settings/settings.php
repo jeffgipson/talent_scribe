@@ -45,12 +45,15 @@ function render_rw_ts_settings_page()
             background: none;
             margin-top: 10px;
         }
+
         progress#file::-webkit-progress-value {
             background: linear-gradient(90deg, rgb(52 137 191) 0%, rgb(104 77 148) 100%);
         }
+
         #insert-media-button {
             display: none;
         }
+
         #wpcontent {
             background: #fff;
             /*background-image: url('https://recruiterswebsites.com/wp-content/plugins/rwchat../assets//background.png');*/
@@ -178,7 +181,8 @@ function render_rw_ts_settings_page()
 
                         </script>
                         <!--                        Show progress bar with usage vs limit and show status-->
-                        <label>Status:</label> <span class="" id="status"></span> <span id="usage"></span> <span id="of">of</span> <span
+                        <label>Status:</label> <span class="" id="status"></span> <span id="usage"></span> <span
+                                id="of">of</span> <span
                                 id="limit"></span><br>
                         <div class="progress">
                             <progress id="file" value="" max=""></progress>
@@ -189,71 +193,72 @@ function render_rw_ts_settings_page()
                 </tr>
 
                 <tr>
-                <th scope="row">Company Summary:</th>
-                <td>
+                    <th scope="row">Company Summary:</th>
+                    <td>
 
-                    <?php
+                        <?php
 
-                    $rw_ts_company_summary = get_option( 'rw-ts_company_summary' );
-                    echo wp_editor( $rw_ts_company_summary, 'rw-ts_company_summary', array('textarea_name' => 'rw-ts_company_summary')  );
+                        $rw_ts_company_summary = get_option('rw-ts_company_summary');
+                        echo wp_editor($rw_ts_company_summary, 'rw-ts_company_summary', array('textarea_name' => 'rw-ts_company_summary'));
 
 
-                    ?>
-                </td>
+                        ?>
+                    </td>
                 </tr>
 
 
-                                <tr>
-                                    <th scope="row">Industries:</th>
-                                    <td>
-                                        <select id="industries" style="width:200px;" class="js-example-basic-multiple" name="rw-ts_industries[]" multiple="multiple">
-                                            <option value="agriculture">Agriculture</option>
-                                            <option value="automotive">Automotive</option>
-                                            <option value="banking">Banking</option>
-                                            <option value="biotechnology">Biotechnology</option>
-                                            <option value="construction">Construction</option>
-                                            <option value="education">Education</option>
-                                            <option value="energy">Energy</option>
-                                            <option value="entertainment">Entertainment</option>
-                                            <option value="financial services">Financial Services</option>
-                                            <option value="food processing">Food Processing</option>
-                                            <option value="healthcare">Healthcare</option>
-                                            <option value="hospitality">Hospitality</option>
-                                            <option value="information technology">Information Technology</option>
-                                            <option value="insurance">Insurance</option>
-                                            <option value="manufacturing">Manufacturing</option>
-                                            <option value="media">Media</option>
-                                            <option value="real estate">Real Estate</option>
-                                            <option value="retail">Retail</option>
-                                            <option value="telecommunications">Telecommunications</option>
-                                            <option value="transportation">Transportation</option>
-                                            <option value="utilities">Utilities</option>
-                                            <option value="wholesale trade">Wholesale Trade</option>
-                                            <option value="other">Other</option>
+                <tr>
+                    <th scope="row">Industries:</th>
+                    <td>
+                        <select id="industries" style="width:200px;" class="js-example-basic-multiple"
+                                name="rw-ts_industries[]" multiple="multiple">
+                            <option value="agriculture">Agriculture</option>
+                            <option value="automotive">Automotive</option>
+                            <option value="banking">Banking</option>
+                            <option value="biotechnology">Biotechnology</option>
+                            <option value="construction">Construction</option>
+                            <option value="education">Education</option>
+                            <option value="energy">Energy</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="financial services">Financial Services</option>
+                            <option value="food processing">Food Processing</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="hospitality">Hospitality</option>
+                            <option value="information technology">Information Technology</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="media">Media</option>
+                            <option value="real estate">Real Estate</option>
+                            <option value="retail">Retail</option>
+                            <option value="telecommunications">Telecommunications</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="wholesale trade">Wholesale Trade</option>
+                            <option value="other">Other</option>
 
-                                        </select>
-                                        <script>
+                        </select>
+                        <script>
 
-                                            jQuery(document).ready(function() {
-                                                jQuery('.js-example-basic-multiple').select2(
-                                                    {
-                                                        placeholder: "Select Industries",
-                                                        width: '100%'
+                            jQuery(document).ready(function () {
+                                jQuery('.js-example-basic-multiple').select2(
+                                    {
+                                        placeholder: "Select Industries",
+                                        width: '100%'
 
-                                                    }
-                                                );
-                                                jQuery('#industries').val(<?php echo json_encode(get_option('rw-ts_industries')); ?>).trigger('change');
+                                    }
+                                );
+                                jQuery('#industries').val(<?php echo json_encode(get_option('rw-ts_industries')); ?>).trigger('change');
 
-                                            });
-                                        </script>
-                                        <?php
-//                                        $selected_industries = $_POST['industries'];
-//                                        update_option('rw-ts_industries', $selected_industries);
-//                                        print_r( get_option('rw-ts_industries'));
-                                        ?>
+                            });
+                        </script>
+                        <?php
+                        //                                        $selected_industries = $_POST['industries'];
+                        //                                        update_option('rw-ts_industries', $selected_industries);
+                        //                                        print_r( get_option('rw-ts_industries'));
+                        ?>
 
-                                    </td>
-                                </tr>
+                    </td>
+                </tr>
                 <!--                <tr>-->
                 <!--                    <th scope="row">Language model:</th>-->
                 <!--                    <td>-->
@@ -499,12 +504,147 @@ function render_rw_ts_settings_page()
                 });
 
             </script>
+            </script>
+            </script>
+            <div id="modal-wrapper">
+                <div id="myModal" class="modal" style="display: none;">
+                    <div id="modalhead">
+                        <h3>Welcome to TalentScribe!</h3>
+                    </div>
+                    <span class="close">&times;</span>
+                    <div class="modal-content">
+            <span class="bot-response">
+                <div class="robot">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="bubble left" id="text-bubble">
+                    <div id="text-bubble-text">
+                        <p id="text-bubble-text-p">Hi, Welcome to TalentScribe. I'm going to ask you a few questions to learn more about your company. Are you ready?</p>
+                    </div>
+                </div>
+            </span>
 
+                        <span class="bot-response-typing" style="display: none">
+                <img src="<?php echo esc_url(plugins_url('../assets//typing.gif', __FILE__)); ?>" width="60" alt="Typing" id="typing">
+            </span>
+
+                        <div id="user-response">
+                            <div id="user-response-input">
+                                <textarea rows="3" cols="7" id="user-response-input-box" placeholder="Type your response here..."></textarea>
+                            </div>
+                            <div id="user-response-submit">
+                                <div id="user-response-submit-button"><i class="fa-regular fa-paper-plane"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="myBtn">Open Modal</button>
+                <script>
+                    //allow modal-content to scroll
+                    jQuery('.modal-content').css('overflow-y', 'auto');
+                    jQuery('.modal-content').css('height', '400px');
+
+                    var questions = ["Question 1", "Question 2", "Question 3", "Question 4", "Question 5", "Question 6", "Question 7", "Question 8", "Question 9", "Question 10"];
+                    var question = 0;
+                    var responses = [];
+
+                    // show popup on click of button
+                    jQuery('#myBtn').click(function (event) {
+                        // prevent button from submitting form
+                        event.preventDefault();
+                        jQuery('#myModal').toggle();
+
+                        // on keypress of enter submit response
+                        jQuery('#user-response-input-box').keypress(function (e) {
+                            if (e.which == 13) {
+                                jQuery('#user-response-submit-button').click();
+                            }
+                        });
+
+                        jQuery('#user-response-submit-button').click(function () {
+                            // check if it's not the starter question
+                            if (question > 0) {
+                                // push the question and response to the array as a key value pair
+                                responses.push(questions[question - 1] + ": " + jQuery('#user-response-input-box').val());
+                                console.log(responses);
+                            }
+
+
+
+                            // append next question after last response from user-bubble
+                            var nextquestion = questions[question];
+                            console.log(nextquestion);
+                            if (nextquestion) {
+                                console.log('next question');
+                                jQuery('.modal-content').append('<span class="user-response">' +
+                                    '<div class="user-bubble right" id="user-text-bubble">' +
+                                    '<div id="user-text-bubble-text">' +
+                                    '<p id="user-text-bubble-text-p">' + jQuery('#user-response-input-box').val() + '</p>' +
+                                    '</div>' +
+                                    '</div> ' +
+                                    '<div class="user"><i class="fa-solid fa-user"></i>' +
+                                    '</div>' +
+                                    '</span>');
+
+                                jQuery('.modal-content').append('<span class="bot-response-typing">' +
+                                    '<img src="<?php echo esc_url(plugins_url('../assets//typing.gif', __FILE__)); ?>" width="60" alt="Typing" id="typing">' +
+                                    '</span>');
+                                // hide fake bot response typing class with delay
+                                setTimeout(function () {
+                                    jQuery('.bot-response-typing').hide();
+                                    jQuery('.modal-content').append('<span class="bot-response">' +
+                                        '<div class="robot">' +
+                                        '<i class="fa-solid fa-robot"></i>' +
+                                        '</div>' +
+                                        '<div class="bubble left" id="text-bubble">' +
+                                        '<div id="text-bubble-text">' +
+                                        '<p id="text-bubble-text-p">' + nextquestion + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</span>');
+
+                                    console.log('next question appended');
+                                }, 400);
+
+                                question++;
+
+
+                            }
+
+
+
+
+
+                            // clear input box
+                            jQuery('#user-response-input-box').val('');
+
+                            //scroll to bottom of modal-content
+                            jQuery('.modal-content').scrollTop(jQuery('.modal-content')[0].scrollHeight);
+
+                            if (question == questions.length) {
+                                jQuery('#text-bubble-text-p').text('Thank you for your responses. Please click the button below to continue.');
+                                jQuery('#user-response-submit-button').click(function () {
+                                    jQuery('#myModal').hide();
+                                });
+                            }
+                        });
+                    });
+
+                    // onclick of close button close popup
+                    jQuery('.close').click(function () {
+                        jQuery('#myModal').hide();
+                    });
+                </script>
+            </div>
 
             <?php submit_button(); ?>
         </form>
 
     </div>
+
+
+
     <?php
 }
 
@@ -536,3 +676,4 @@ function enqueue_rw_ts_scripts()
 }
 
 add_action('admin_enqueue_scripts', 'enqueue_rw_ts_scripts');
+
