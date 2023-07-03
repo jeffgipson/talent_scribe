@@ -754,6 +754,18 @@ function render_rw_ts_settings_page()
                         responses = [];
                     }
 
+                        console.log(responses)
+                        if (responses.length < 2) {
+                            // click on get started button
+                            //js delay
+                            setTimeout(function () {
+                                // remove overlay from page
+                                jQuery('#myBtn').click();
+                                console.log('showing modal')
+                            }, 500);
+
+                        }
+
 
                     var question = 0;
 
