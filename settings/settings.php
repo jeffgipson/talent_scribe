@@ -255,7 +255,7 @@ function render_rw_ts_settings_page()
                 <tr>
                     <th scope="row">Industries:</th>
                     <td>
-                        <select id="industries" style="width:200px;" class="js-example-basic-multiple"
+                        <select required id="industries" style="width:200px;" class="js-example-basic-multiple"
                                 name="rw-ts_industries[]" multiple="multiple">
                             <option value="agriculture">Agriculture</option>
                             <option value="automotive">Automotive</option>
