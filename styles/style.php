@@ -121,7 +121,6 @@ input#search {
     bottom: 0;
     right: 0;
     width: 300px;
-    min-height: 300px;
     background: linear-gradient(90deg, rgb(52 137 191) 0%, rgb(104 77 148) 100%);
     color: #fff;
     border: 1px solid #000;
@@ -200,11 +199,12 @@ div#text-bubble {
             0 0/var(--r) var(--r) space padding-box;
 }
 .modal-content {
-    margin: 0;
     display: grid;
-    /*gap: 0px;*/
+    gap: 0px;
     font-family: system-ui, sans-serif;
     font-size: 20px;
+    margin-bottom: 40px;
+    overflow-y: scroll;
 }
 .user-bubble {
     --r: 25px;
@@ -269,7 +269,7 @@ textarea#user-response-input-box {
     padding: 6px;
     position: relative;
     float: right;
-    top: -41px;
+    top: -48px;
     right: 20px;
 }
 #user-text-bubble {
@@ -279,7 +279,7 @@ textarea#user-response-input-box {
     border-radius: 27px;
     width: 225px;
     float: left;
-    /*margin-top: 29px;*/
+    margin-top: 19px;
     left: -23px;
     position: relative;
 }
@@ -292,4 +292,11 @@ textarea#user-response-input-box {
     /* other CSS properties */
     margin-bottom: 10px; /* adjust the value as per your desired spacing */
 }
+/*.user-response {*/
+/*    height: 0px;*/
+/*}*/
+/*.bot-response {*/
+/*    height: 19px;*/
+/*}*/
+
 </style>
