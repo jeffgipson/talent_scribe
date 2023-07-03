@@ -148,7 +148,6 @@ function render_rw_ts_settings_page()
                                         jQuery('#of').show()
                                     } else {
                                         jQuery('#status').addClass('inactive')
-                                        console.log('inactive')
                                         //fill in the text for the button
                                         jQuery('#status').text('Inactive')
                                         jQuery('#of').hide()
@@ -177,7 +176,7 @@ function render_rw_ts_settings_page()
                                             var site_url = "<?php echo get_bloginfo('url'); ?>"
                                             var industry = "<?php echo implode(get_option('rw-ts_industries')) ?>"
                                             var company_type = "<?php echo get_option('rw-ts_company_type') ?>"
-                                            var prompt = "ONLY RETURN THE QUESTION IN A JAVASCRIPT ARRAY NO pretext or post text: In a minute, I’m going to ask you to create copy for my " + company_type + " firm: " + site_name + "," + site_url + " we focus in these industries:" + industry + ". We will be creating blog content. Before we begin, I want you to fully understand my business.  Ask me 20 questions about my business, candidates, industry niche, Recruiting or staffing, what level we work and anything else you need in order to complete the tasks to the best of your ability. ONLY RETURN THE QUESTION IN A JAVASCRIPT ARRAY NO pretext or post text"
+                                            var prompt = "ONLY RETURN THE QUESTION IN A JAVASCRIPT ARRAY NO pretext or post text: In a minute, I’m going to ask you to create copy for my "+ company_type+" firm: " + site_name + "," + site_url + " we focus in these industries:" + industry + ". We will be creating blog content. Before we begin, I want you to fully understand my business.  Ask me 20 questions about my business, candidates, industry niche, Recruiting or staffing, what level we work and anything else you need in order to complete the tasks to the best of your ability. ONLY RETURN THE QUESTION IN A JAVASCRIPT ARRAY NO pretext or post text"
 
                                             var url = "https://api.openai.com/v1/chat/completions"
                                             <?php if (get_option('rw-ts_text_kickoff_questions') == ''){ ?>
@@ -238,18 +237,17 @@ function render_rw_ts_settings_page()
                     <td>
 
                         <select name="rw-ts_company_type" id="rw-ts_company_type">
-                            <option value="Recruiting">Recruiting</option>
-                            <option value="Staffing">Staffing</option>
+                                <option value="Recruiting">Recruiting</option>
+                                <option value="Staffing">Staffing</option>
                         </select>
                         <script>
                             //set the value of the select box to the value in the database
                             jQuery('#rw-ts_company_type').val('<?php echo get_option('rw-ts_company_type'); ?>')
                         </script>
 
-                        <!--                        <input type="text" name="rw-ts_company_type"-->
-                        <!--                               value="--><?php //echo get_option('rw-ts_company_type');
-                        ?><!--"-->
-                        <!--                               id="rw-ts_company_type" placeholder="Recruiting or Staffing"><br>-->
+<!--                        <input type="text" name="rw-ts_company_type"-->
+<!--                               value="--><?php //echo get_option('rw-ts_company_type'); ?><!--"-->
+<!--                               id="rw-ts_company_type" placeholder="Recruiting or Staffing"><br>-->
 
                     </td>
                 </tr>
@@ -307,22 +305,22 @@ function render_rw_ts_settings_page()
                     </td>
                 </tr>
 
-                <!--                make a fake submit button-->
-                <!--                <tr class="hidesection">-->
-                <!--                    <th scope="row"></th>-->
-                <!--                    <td>-->
-                <!--                        <input type="submit" name="submit" id="submit" class="button button-primary"-->
-                <!--                               value="Save Changes">-->
-                <!--                    </td>-->
-                <!---->
-                <!--                <script>-->
-                <!--                    //on click of the submit button submit the form-->
-                <!--                    jQuery('#submit').click(function () {-->
-                <!--                        jQuery('#form').submit();-->
-                <!--                    })-->
-                <!---->
-                <!--                </script>-->
-                <!--                </tr>-->
+<!--                make a fake submit button-->
+<!--                <tr class="hidesection">-->
+<!--                    <th scope="row"></th>-->
+<!--                    <td>-->
+<!--                        <input type="submit" name="submit" id="submit" class="button button-primary"-->
+<!--                               value="Save Changes">-->
+<!--                    </td>-->
+<!---->
+<!--                <script>-->
+<!--                    //on click of the submit button submit the form-->
+<!--                    jQuery('#submit').click(function () {-->
+<!--                        jQuery('#form').submit();-->
+<!--                    })-->
+<!---->
+<!--                </script>-->
+<!--                </tr>-->
 
                 <tr class="hidesection">
                     <th scope="row">Company Summary:</th>
@@ -460,9 +458,9 @@ function render_rw_ts_settings_page()
                         <!--                        create a hidden textarea for the kickoff questions -->
                         <input type="hidden" name="rw-ts_text_kickoff_questions" id="rw-ts_text_kickoff_questions"
                                value="<?php echo get_option('rw-ts_text_kickoff_questions'); ?>">
-                        <input type="hidden" name="rw-ts_responses" id="rw-ts_responses"
+ <input type="hidden" name="rw-ts_responses" id="rw-ts_responses"
                                value="<?php echo get_option('rw-ts_responses'); ?>">
-                        <input type="hidden" name="rw-ts_company_profile" id="rw-ts_company_profile"
+ <input type="hidden" name="rw-ts_company_profile" id="rw-ts_company_profile"
                                value="<?php echo get_option('rw-ts_company_profile'); ?>">
 
 
@@ -482,33 +480,32 @@ function render_rw_ts_settings_page()
 
 
                     <?php
-                    if (get_option('rw-ts_text_kickoff_questions')) {
-                        echo '<th id="botheading" scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!</th>';
-                    } else {
-                        echo '<th id="botheading" scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Is Researching...</th>';
-                    }
+                   if(get_option('rw-ts_text_kickoff_questions')){
+                       echo '<th id="botheading" scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!</th>';
+                   }else{
+                          echo '<th id="botheading" scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Is Researching...</th>';
+                   }
                     ?>
 
                     <script>
                         //if questions exist
-                        if (jQuery('#rw-ts_text_kickoff_questions').val() == '') {
+                        if(jQuery('#rw-ts_text_kickoff_questions').val() == ''){
 
                             jQuery('#botheading').html('<i class="fa-solid fa-robot"></i> Talent Scribe Bot Is Researching...');
                             // <th scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Is Researching...</th>
 
-                        } else {
+                        }else{
                             // <th scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!</th>
                             jQuery('#botheading').html('<i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!');
                         }
                     </script>
 
 
-                    <!--                    <th scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!</th>-->
+<!--                    <th scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!</th>-->
                     <td>
                         <button id="myBtn">Get Started</button>
 
-                        <!--                --><?php //print_r(get_option('rw-ts_text_kickoff_questions'));
-                        ?>
+                        <!--                --><?php //print_r(get_option('rw-ts_text_kickoff_questions')); ?>
 
                         <!--                create a reset button -->
                         <button id="reset">Reset</button>
@@ -628,8 +625,7 @@ function render_rw_ts_settings_page()
 
             </script>
 
-            <!--            --><?php //echo get_option('rw-ts_text_kickoff_questions')
-            ?><!--;-->
+<!--            --><?php //echo get_option('rw-ts_text_kickoff_questions') ?><!--;-->
             <div id="modal-wrapper">
                 <div id="myModal" class="modal" style="display: none;">
                     <div id="modalhead">
@@ -658,7 +654,7 @@ function render_rw_ts_settings_page()
                     <div id="user-response">
                         <div id="user-response-input">
                             <script>
-                                function auto_grow(element) {
+                                    function auto_grow(element) {
                                     element.style.height = "5px";
                                     element.style.height = (element.scrollHeight) + "px";
                                 }
@@ -671,247 +667,246 @@ function render_rw_ts_settings_page()
                         </div>
                     </div>
                 </div>
-            </div>
+                </div>
 
 
-            <script>
-
-                //get url params and set to variable
-                var reset = false
-                if (jQuery('#rw-ts_text_kickoff_questions').val() == '') {
-                    reset = true
-                }
-
-                if (reset == true) {
-                    //js delay
-                    setTimeout(function () {
-                        // remove overlay from page
-                        jQuery('body').append('<div id="rw-ts-loading" style="display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);z-index: 9999;"><img src="<?php echo esc_url(plugins_url('../assets/Writing.png', __FILE__)); ?>" style="width: 250px; position: absolute;top: 37%;left: calc(50% - 125px) ;transform: translate(-50%, -50%);"></div>')
-                        jQuery('#rw-ts-loading').fadeIn();
-
-                    }, 500);
-                }
 
 
-                // add overlay to page
+                <script>
 
+//get url params and set to variable
+                    var reset = false
+                    if(jQuery('#rw-ts_text_kickoff_questions').val() == ''){
+                      reset = true
+                    }
 
-                //on click of reset clear out questions and responses and start over
-                jQuery('#reset').click(function (event) {
-                    event.preventDefault();
-                    jQuery('#rw-ts_text_kickoff_questions').val('')
-                    jQuery('#rw-ts_responses').val('')
-                    setTimeout(function () {
-                        console.log('reset')
-                        // jQuery('form').attr('action', jQuery('form').attr('action')+'&bot=reset');
+                    if(reset == true){
+                        //js delay
+                        setTimeout(function () {
+                            // remove overlay from page
+                            jQuery('body').append('<div id="rw-ts-loading" style="display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);z-index: 9999;"><img src="<?php echo esc_url(plugins_url('../assets/Writing.png', __FILE__)); ?>" style="width: 250px; position: absolute;top: 37%;left: calc(50% - 125px) ;transform: translate(-50%, -50%);"></div>')
+                            jQuery('#rw-ts-loading').fadeIn();
 
-                        jQuery('#submit').click()
-                    }, 500);
-
-
-                })
-
-                jQuery(document).ready(function () {
-                    function scrollToBottom(id) {
-                        var div = document.getElementById(id);
-
-                        /*TRY*/
-                        div.scrollTop = div.scrollHeight - div.clientHeight;
-                        /*OR*/
-                        // $('#'+id).scrollTop(div.scrollHeight - div.clientHeight);
+                        }, 500);
                     }
 
 
-                });
 
-                //allow modal-content to scroll
-                // jQuery('.modal-content').css('overflow-y', 'auto');
-                // jQuery('.modal-content').css('height', '400px');
-
-                var questions;
-                var questionsValue = JSON.stringify(`<?php echo get_option('rw-ts_text_kickoff_questions'); ?>`);
-                if (questionsValue) {
-                    questions = JSON.parse(questionsValue);
-                    //split on ','
-                    questions = questions.replaceAll(/(\r\n|\n|\r)/gm, "");
-                    questions = questions.replaceAll("['", "");
-                    questions = questions.replaceAll("']", "");
-                    questions = questions.replaceAll("', '", "','");
-                    questions = questions.replaceAll("' ,'", "','");
-                    questions = questions.split("','");
-
-                } else {
-                    questions = [];
-                }
-
-                var responses;
-                var responsesValue = JSON.stringify(`<?php echo get_option('rw-ts_responses'); ?>`);
-                if (responsesValue) {
-                    responses = JSON.parse(responsesValue);
-                    responses = responses.replaceAll("['", "");
-                    responses = responses.replaceAll("']", "");
-                    responses = responses.split("','");
-                } else {
-                    responses = [];
-                }
-                console.log(responses)
-                if (responses.length < 2) {
-                    // click on get started button
-                    jQuery('#myBtn').click();
-                    console.log('showing modal')
-                }
+                    // add overlay to page
 
 
-                var question = 0;
+                    //on click of reset clear out questions and responses and start over
+                    jQuery('#reset').click(function(event){
+                        event.preventDefault();
+                        jQuery('#rw-ts_text_kickoff_questions').val('')
+                        jQuery('#rw-ts_responses').val('')
+                        setTimeout(function () {
+                            console.log('reset')
+                         // jQuery('form').attr('action', jQuery('form').attr('action')+'&bot=reset');
+
+                        jQuery('#submit').click()
+                        }, 500);
 
 
-                // show popup on click of button
-                jQuery('#myBtn').click(function (event) {
-                    // prevent button from submitting form
-                    event.preventDefault();
-                    jQuery('#myModal').toggle();
+                    })
 
-                    // on keypress of enter submit response
-                    jQuery('#user-response-input-box').keypress(function (e) {
-                        if (e.which == 13) {
-                            jQuery('#user-response-submit-button').click();
+                    jQuery(document).ready(function(){
+                        function scrollToBottom (id) {
+                            var div = document.getElementById(id);
+
+                            /*TRY*/
+                            div.scrollTop = div.scrollHeight - div.clientHeight;
+                            /*OR*/
+                            // $('#'+id).scrollTop(div.scrollHeight - div.clientHeight);
                         }
+
+
                     });
 
-                    jQuery('#user-response-submit-button').click(function () {
-                        // check if it's not the starter question
-                        //scroll to bottom of modal-content
-                        console.log('scrolling')
-                        jQuery('.modal-content').animate({scrollTop: jQuery('.modal-content').prop("scrollHeight")}, 500);
+                    //allow modal-content to scroll
+                    // jQuery('.modal-content').css('overflow-y', 'auto');
+                    // jQuery('.modal-content').css('height', '400px');
 
-                        if (question > 0) {
-                            // push the question and response to the array as a key value pair
-                            responses.push(questions[question - 1] + ": " + jQuery('#user-response-input-box').val());
-                            //save the array to the hidden input field
-                            jQuery('#rw-ts_responses').val(responses);
-                            console.log(responses);
-                        }
+                    var questions;
+                    var questionsValue = JSON.stringify(`<?php echo get_option('rw-ts_text_kickoff_questions'); ?>`);
+                    if (questionsValue) {
+                        questions = JSON.parse(questionsValue);
+                        //split on ','
+                        questions = questions.replaceAll(/(\r\n|\n|\r)/gm, "");
+                        questions = questions.replaceAll("['", "");
+                        questions = questions.replaceAll("']", "");
+                        questions = questions.replaceAll("', '", "','");
+                        questions = questions.replaceAll("' ,'", "','");
+                        questions = questions.split("','");
+
+                    } else {
+                        questions = [];
+                    }
+
+                    var responses;
+                    var responsesValue = JSON.stringify(`<?php echo get_option('rw-ts_responses'); ?>`);
+                    if (responsesValue) {
+                        responses = JSON.parse(responsesValue);
+                        responses = responses.replaceAll("['", "");
+                        responses = responses.replaceAll("']", "");
+                        responses = responses.split("','");
+                    } else {
+                        responses = [];
+                    }
 
 
-                        // append next question after last response from user-bubble
-                        var nextquestion = questions[question];
-                        console.log(nextquestion);
-                        if (nextquestion) {
-                            console.log('next question');
-                            jQuery('.modal-content').append('<span class="user-response">' +
-                                '<div class="user-bubble right" id="user-text-bubble">' +
-                                '<div id="user-text-bubble-text">' +
-                                '<p id="user-text-bubble-text-p">' + jQuery('#user-response-input-box').val() + '</p>' +
-                                '</div>' +
-                                '</div> ' +
-                                '<div class="user"><i class="fa-solid fa-user"></i>' +
-                                '</div>' +
-                                '</span>');
+                    var question = 0;
 
-                            jQuery('.modal-content').append('<span class="bot-response-typing">' +
-                                '<img src="<?php echo esc_url(plugins_url('../assets//typing.gif', __FILE__)); ?>" width="60" alt="Typing" id="typing">' +
-                                '</span>');
-                            // hide fake bot response typing class with delay
-                            setTimeout(function () {
-                                jQuery('.bot-response-typing').remove();
-                                jQuery('.modal-content').append('<span class="bot-response">' +
-                                    '<div class="robot">' +
-                                    '<i class="fa-solid fa-robot"></i>' +
+
+                    // show popup on click of button
+                    jQuery('#myBtn').click(function (event) {
+                        // prevent button from submitting form
+                        event.preventDefault();
+                        jQuery('#myModal').toggle();
+
+                        // on keypress of enter submit response
+                        jQuery('#user-response-input-box').keypress(function (e) {
+                            if (e.which == 13) {
+                                jQuery('#user-response-submit-button').click();
+                            }
+                        });
+
+                        jQuery('#user-response-submit-button').click(function () {
+                            // check if it's not the starter question
+                            //scroll to bottom of modal-content
+                            console.log('scrolling')
+                             jQuery('.modal-content').animate({scrollTop: jQuery('.modal-content').prop("scrollHeight")}, 500);
+
+                            if (question > 0) {
+                                // push the question and response to the array as a key value pair
+                                responses.push(questions[question - 1] + ": " + jQuery('#user-response-input-box').val());
+                                //save the array to the hidden input field
+                                jQuery('#rw-ts_responses').val(responses);
+                                console.log(responses);
+                            }
+
+
+                            // append next question after last response from user-bubble
+                            var nextquestion = questions[question];
+                            console.log(nextquestion);
+                            if (nextquestion) {
+                                console.log('next question');
+                                jQuery('.modal-content').append('<span class="user-response">' +
+                                    '<div class="user-bubble right" id="user-text-bubble">' +
+                                    '<div id="user-text-bubble-text">' +
+                                    '<p id="user-text-bubble-text-p">' + jQuery('#user-response-input-box').val() + '</p>' +
                                     '</div>' +
-                                    '<div class="bubble left" id="text-bubble">' +
-                                    '<div id="text-bubble-text">' +
-                                    '<p id="text-bubble-text-p">' + nextquestion + '</p>' +
-                                    '</div>' +
+                                    '</div> ' +
+                                    '<div class="user"><i class="fa-solid fa-user"></i>' +
                                     '</div>' +
                                     '</span>');
 
-                                console.log('next question appended');
-                            }, 400);
+                                jQuery('.modal-content').append('<span class="bot-response-typing">' +
+                                    '<img src="<?php echo esc_url(plugins_url('../assets//typing.gif', __FILE__)); ?>" width="60" alt="Typing" id="typing">' +
+                                    '</span>');
+                                // hide fake bot response typing class with delay
+                                setTimeout(function () {
+                                    jQuery('.bot-response-typing').remove();
+                                    jQuery('.modal-content').append('<span class="bot-response">' +
+                                        '<div class="robot">' +
+                                        '<i class="fa-solid fa-robot"></i>' +
+                                        '</div>' +
+                                        '<div class="bubble left" id="text-bubble">' +
+                                        '<div id="text-bubble-text">' +
+                                        '<p id="text-bubble-text-p">' + nextquestion + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</span>');
 
-                            question++;
+                                    console.log('next question appended');
+                                }, 400);
 
-
-                        }
-
-
-                        // clear input box
-                        jQuery('#user-response-input-box').val('');
-
-                        //scroll to bottom of modal-content
-                        // jQuery('.modal-content').scrollTop(jQuery('.modal-content')[0].scrollHeight);
-
-                        if (question == questions.length + 1) {
-                            //make call to open ai api via ajax to create a detailed company profile from the responses array
-
-                            //make ajax call to get api usage from app.recruitersswebsites.com
-                            jQuery.ajax({
-                                url: 'https://app.recruiterswebsites.com/api/v1/licenses/?key=<?php echo get_option('rw-ts_text_apikey'); ?>&usage=true',
-                                type: 'GET',
-                                dataType: 'json',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': 'Bearer <?php echo get_option('rw-ts_text_apikey'); ?>'
-                                },
-                                success: function (data) {
-                                    console.log(data)
-                                    status = data.status
-
-                                    if (status == 'Active')
-                                        servicekey = data.service_key
+                                question++;
 
 
-                                    var company_summary = "<?php echo get_option('rw-ts_company_summary') ?>"
-                                    var site_name = "<?php echo get_bloginfo('name'); ?>"
-                                    var site_url = "<?php echo get_bloginfo('url'); ?>"
-                                    var industry = "<?php echo implode(get_option('rw-ts_industries')) ?>"
-                                    var company_type = "<?php echo get_option('rw-ts_company_type') ?>"
-                                    var prompt = "A few minutes ago, I asked you to create 20 questions that would help you create copy for my " + company_type + " firm: " + site_name + "," + site_url + " we focus in these industries:" + industry + ". We will be creating blog content later not now. Please use these questions and answers to create a detailed company profile that will be used in later prompts to create blog content. \n\n" + responses.join("\n\n") + "\n\n" + company_summary
+                            }
 
-                                    var url = "https://api.openai.com/v1/chat/completions"
-                                    //make ajax call to openai to get kickoff questions
-                                    jQuery.ajax({
-                                        url: url,
-                                        type: 'POST',
-                                        dataType: 'json',
-                                        contentType: "application/json",
-                                        headers: {
-                                            Authorization: "Bearer " + servicekey,
+
+                            // clear input box
+                            jQuery('#user-response-input-box').val('');
+
+                            //scroll to bottom of modal-content
+                            // jQuery('.modal-content').scrollTop(jQuery('.modal-content')[0].scrollHeight);
+
+                            if (question == questions.length + 1) {
+                                //make call to open ai api via ajax to create a detailed company profile from the responses array
+
+                                //make ajax call to get api usage from app.recruitersswebsites.com
+                                jQuery.ajax({
+                                    url: 'https://app.recruiterswebsites.com/api/v1/licenses/?key=<?php echo get_option('rw-ts_text_apikey'); ?>&usage=true',
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'Bearer <?php echo get_option('rw-ts_text_apikey'); ?>'
+                                    },
+                                    success: function (data) {
+                                        console.log(data)
+                                        status = data.status
+
+                                        if (status == 'Active')
+                                            servicekey = data.service_key
+
+
+                                        var company_summary = "<?php echo get_option('rw-ts_company_summary') ?>"
+                                        var site_name = "<?php echo get_bloginfo('name'); ?>"
+                                        var site_url = "<?php echo get_bloginfo('url'); ?>"
+                                        var industry = "<?php echo implode(get_option('rw-ts_industries')) ?>"
+                                        var company_type = "<?php echo get_option('rw-ts_company_type') ?>"
+                                        var prompt = "A few minutes ago, I asked you to create 20 questions that would help you create copy for my " + company_type + " firm: " + site_name + "," + site_url + " we focus in these industries:" + industry + ". We will be creating blog content later not now. Please use these questions and answers to create a detailed company profile that will be used in later prompts to create blog content. \n\n" + responses.join("\n\n") + "\n\n" + company_summary
+
+                                        var url = "https://api.openai.com/v1/chat/completions"
+                                        //make ajax call to openai to get kickoff questions
+                                        jQuery.ajax({
+                                            url: url,
+                                            type: 'POST',
+                                            dataType: 'json',
                                             contentType: "application/json",
-                                        },
-                                        data: JSON.stringify({
-                                            messages: [{role: "user", content: prompt}],
-                                            model: "gpt-3.5-turbo-16k"
-                                        }),
-                                        success: function (response) {
-                                            console.log(response)
-                                            //set the value of the text area to the response
-                                            jQuery('#rw-ts_company_profile').val(response.choices[0]['message']['content'])
+                                            headers: {
+                                                Authorization: "Bearer " + servicekey,
+                                                contentType: "application/json",
+                                            },
+                                            data: JSON.stringify({
+                                                messages: [{role: "user", content: prompt}],
+                                                model: "gpt-3.5-turbo-16k"
+                                            }),
+                                            success: function (response) {
+                                                console.log(response)
+                                                //set the value of the text area to the response
+                                                jQuery('#rw-ts_company_profile').val(response.choices[0]['message']['content'])
 
-                                        },
-                                    });
+                                            },
+                                        });
 
 
-                                }
+                                    }
 
 
-                            });
+                                });
 
-                            jQuery('#text-bubble-text-p').text('Thank you for your responses. Please click the button below to continue.');
-                            jQuery('#user-response-submit-button').click(function () {
-                                jQuery('#myModal').hide();
-                            });
-                        }
+                                jQuery('#text-bubble-text-p').text('Thank you for your responses. Please click the button below to continue.');
+                                jQuery('#user-response-submit-button').click(function () {
+                                    jQuery('#myModal').hide();
+                                });
+                            }
+                        });
                     });
-                });
 
-                // onclick of close button close popup
-                jQuery('.close').click(function () {
-                    jQuery('#myModal').hide();
-                });
-            </script>
+                    // onclick of close button close popup
+                    jQuery('.close').click(function () {
+                        jQuery('#myModal').hide();
+                    });
+                </script>
 
-    <?php submit_button(); ?>
-    </form>
+            </div>
+
+            <?php submit_button(); ?>
+        </form>
 
     </div>
 
