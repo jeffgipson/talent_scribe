@@ -178,6 +178,8 @@ div#text-bubble {
     left: 0;
     color: #000;
     padding: 5px 10px 5px 10px;
+    border-bottom: 1px solid #000;
+    z-index: 1;
 }
 .left {
     --_d: 0%;
@@ -203,8 +205,20 @@ div#text-bubble {
     gap: 0px;
     font-family: system-ui, sans-serif;
     font-size: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
     overflow-y: scroll;
+    height: 350px
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.modal-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.modal-content {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 .user-bubble {
     --r: 25px;
@@ -221,7 +235,7 @@ div#text-bubble {
 }
 #user-response-submit {
     position: fixed;
-    bottom: 26px;
+    bottom: 37px;
     right: 5px;
     background: #fff;
     color: #000;
@@ -230,26 +244,28 @@ div#text-bubble {
     border-radius: 30px;
 }
 textarea#user-response-input-box {
-    position: fixed;
-    bottom: 9px;
-    width: 230px;
+    position: relative;
+    top: 0px;
+    width: 230px
     border: none;
-    resize:none;
+    resize: none;
     border: none;
     overflow: auto;
     outline: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+    max-height: 200px;
 }
 #user-response-input {
     background: #fff;
-    width: 100%;
     position: fixed;
-    height: 91px;
+    min-height: 91px;
     bottom: 0px;
     margin-left: -10px;
-    padding-left: 9px;
+    max-height: 200px;
+    padding: 15px;
+    width: 100%;
 }
 #user-response-submit-button {
     cursor: pointer;
@@ -292,11 +308,11 @@ textarea#user-response-input-box {
     /* other CSS properties */
     margin-bottom: 10px; /* adjust the value as per your desired spacing */
 }
-/*.user-response {*/
-/*    height: 0px;*/
-/*}*/
-/*.bot-response {*/
-/*    height: 19px;*/
-/*}*/
+.hidesection{
+    display: none;
+}
+#wpfooter {
+    display: none;
+}
 
 </style>

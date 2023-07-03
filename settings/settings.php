@@ -1,5 +1,4 @@
 <?php
-// Add settings page for plugin
 function add_rw_ts_settings_page()
 {
     add_options_page('rw-ts Settings', 'RW Talent Scribe', 'manage_options', 'rw-ts-settings', 'render_rw_ts_settings_page');
@@ -137,6 +136,10 @@ function render_rw_ts_settings_page()
                                     status = data.status
 
                                     if (status == 'Active') {
+                                        // change .hidesection class to show
+                                        jQuery('tr').removeClass('hidesection')
+
+
                                         jQuery('#status').addClass('active')
                                         jQuery('#rw-ts-btn').html('My Account')
                                         //jQuery('#rw-ts-btn').prepend('<img src="<?php //echo esc_url(plugins_url('../assets//RW.png', __FILE__)); ?>//" style="width: 20px;margin-right: 10px;">')
@@ -197,6 +200,10 @@ function render_rw_ts_settings_page()
                                                     <?php if (get_option('rw-ts_text_kickoff_questions') == '') { ?>
                                                     jQuery('#rw-ts_text_kickoff_questions').val(response.choices[0]['message']['content'].replaceAll('"', '\''))
                                                     <?php } ?>
+                                                    // remove overlay rw-ts-loading
+                                                    jQuery('#rw-ts-loading').remove()
+                                                    // click the save button
+                                                    jQuery('#submit').click()
                                                 },
                                             });
                                             <?php } ?>
@@ -228,27 +235,22 @@ function render_rw_ts_settings_page()
                 <tr>
                     <th scope="row">Company Type:</th>
                     <td>
-                        <input type="text" name="rw-ts_company_type"
-                               value="<?php echo get_option('rw-ts_company_type'); ?>"
-                               id="rw-ts_company_type" placeholder="Recruiting or Staffing"><br>
+
+                        <select name="rw-ts_company_type" id="rw-ts_company_type">
+                                <option value="Recruiting">Recruiting</option>
+                                <option value="Staffing">Staffing</option>
+                        </select>
+                        <script>
+                            //set the value of the select box to the value in the database
+                            jQuery('#rw-ts_company_type').val('<?php echo get_option('rw-ts_company_type'); ?>')
+                        </script>
+
+<!--                        <input type="text" name="rw-ts_company_type"-->
+<!--                               value="--><?php //echo get_option('rw-ts_company_type'); ?><!--"-->
+<!--                               id="rw-ts_company_type" placeholder="Recruiting or Staffing"><br>-->
 
                     </td>
                 </tr>
-
-                <tr>
-                    <th scope="row">Company Summary:</th>
-                    <td>
-
-                        <?php
-
-                        $rw_ts_company_summary = get_option('rw-ts_company_summary');
-                        echo wp_editor($rw_ts_company_summary, 'rw-ts_company_summary', array('textarea_name' => 'rw-ts_company_summary'));
-
-
-                        ?>
-                    </td>
-                </tr>
-
 
                 <tr>
                     <th scope="row">Industries:</th>
@@ -302,6 +304,39 @@ function render_rw_ts_settings_page()
 
                     </td>
                 </tr>
+
+<!--                make a fake submit button-->
+<!--                <tr class="hidesection">-->
+<!--                    <th scope="row"></th>-->
+<!--                    <td>-->
+<!--                        <input type="submit" name="submit" id="submit" class="button button-primary"-->
+<!--                               value="Save Changes">-->
+<!--                    </td>-->
+<!---->
+<!--                <script>-->
+<!--                    //on click of the submit button submit the form-->
+<!--                    jQuery('#submit').click(function () {-->
+<!--                        jQuery('#form').submit();-->
+<!--                    })-->
+<!---->
+<!--                </script>-->
+<!--                </tr>-->
+
+                <tr class="hidesection">
+                    <th scope="row">Company Summary:</th>
+                    <td>
+
+                        <?php
+
+                        $rw_ts_company_summary = get_option('rw-ts_company_summary');
+                        echo wp_editor($rw_ts_company_summary, 'rw-ts_company_summary', array('textarea_name' => 'rw-ts_company_summary'));
+
+
+                        ?>
+                    </td>
+                </tr>
+
+
                 <!--                <tr>-->
                 <!--                    <th scope="row">Language model:</th>-->
                 <!--                    <td>-->
@@ -347,7 +382,7 @@ function render_rw_ts_settings_page()
 
                 <!--                    </td>-->
                 <!--                </tr>-->
-                <tr>
+                <tr class="hidesection">
                     <th scope="row">Rewriter settings:</th>
                     <td>
                         <input type="checkbox" name="rw-ts_use_rewriter"
@@ -365,7 +400,7 @@ function render_rw_ts_settings_page()
                 </tr>
 
 
-                <tr>
+                <tr class="hidesection">
 
                     <th scope="row">Custom Prompt Settings:</th>
                     <td>
@@ -439,6 +474,41 @@ function render_rw_ts_settings_page()
 
                         </ul>
 
+                    </td>
+                </tr>
+                <tr>
+
+
+                    <?php
+                   if(get_option('rw-ts_text_kickoff_questions')){
+                       echo '<th id="botheading" scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!</th>';
+                   }else{
+                          echo '<th id="botheading" scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Is Researching...</th>';
+                   }
+                    ?>
+
+                    <script>
+                        //if questions exist
+                        if(jQuery('#rw-ts_text_kickoff_questions').val() == ''){
+
+                            jQuery('#botheading').html('<i class="fa-solid fa-robot"></i> Talent Scribe Bot Is Researching...');
+                            // <th scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Is Researching...</th>
+
+                        }else{
+                            // <th scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!</th>
+                            jQuery('#botheading').html('<i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!');
+                        }
+                    </script>
+
+
+<!--                    <th scope="row"><i class="fa-solid fa-robot"></i> Talent Scribe Bot Has Some Questions!</th>-->
+                    <td>
+                        <button id="myBtn">Get Started</button>
+
+                        <!--                --><?php //print_r(get_option('rw-ts_text_kickoff_questions')); ?>
+
+                        <!--                create a reset button -->
+                        <button id="reset">Reset</button>
                     </td>
                 </tr>
             </table>
@@ -554,8 +624,7 @@ function render_rw_ts_settings_page()
                 });
 
             </script>
-            </script>
-            </script>
+
 <!--            --><?php //echo get_option('rw-ts_text_kickoff_questions') ?><!--;-->
             <div id="modal-wrapper">
                 <div id="myModal" class="modal" style="display: none;">
@@ -584,7 +653,13 @@ function render_rw_ts_settings_page()
                     </div>
                     <div id="user-response">
                         <div id="user-response-input">
-                            <textarea rows="3" cols="7" id="user-response-input-box"
+                            <script>
+                                    function auto_grow(element) {
+                                    element.style.height = "5px";
+                                    element.style.height = (element.scrollHeight) + "px";
+                                }
+                            </script>
+                            <textarea oninput="auto_grow(this)" rows="3" cols="7" id="user-response-input-box"
                                       placeholder="Type your response here..."></textarea>
                         </div>
                         <div id="user-response-submit">
@@ -592,12 +667,48 @@ function render_rw_ts_settings_page()
                         </div>
                     </div>
                 </div>
+                </div>
 
-                <button id="myBtn">Open Modal</button>
 
-                <?php print_r(get_option('rw-ts_text_kickoff_questions')); ?>
+
+
                 <script>
 
+//get url params and set to variable
+                    var reset = false
+                    if(jQuery('#rw-ts_text_kickoff_questions').val() == ''){
+                      reset = true
+                    }
+
+                    if(reset == true){
+                        //js delay
+                        setTimeout(function () {
+                            // remove overlay from page
+                            jQuery('body').append('<div id="rw-ts-loading" style="display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);z-index: 9999;"><img src="<?php echo esc_url(plugins_url('../assets/Writing.png', __FILE__)); ?>" style="width: 250px; position: absolute;top: 37%;left: calc(50% - 125px) ;transform: translate(-50%, -50%);"></div>')
+                            jQuery('#rw-ts-loading').fadeIn();
+
+                        }, 500);
+                    }
+
+
+
+                    // add overlay to page
+
+
+                    //on click of reset clear out questions and responses and start over
+                    jQuery('#reset').click(function(event){
+                        event.preventDefault();
+                        jQuery('#rw-ts_text_kickoff_questions').val('')
+                        jQuery('#rw-ts_responses').val('')
+                        setTimeout(function () {
+                            console.log('reset')
+                         // jQuery('form').attr('action', jQuery('form').attr('action')+'&bot=reset');
+
+                        jQuery('#submit').click()
+                        }, 500);
+
+
+                    })
 
                     jQuery(document).ready(function(){
                         function scrollToBottom (id) {
@@ -621,9 +732,13 @@ function render_rw_ts_settings_page()
                     if (questionsValue) {
                         questions = JSON.parse(questionsValue);
                         //split on ','
+                        questions = questions.replaceAll(/(\r\n|\n|\r)/gm, "");
                         questions = questions.replaceAll("['", "");
                         questions = questions.replaceAll("']", "");
+                        questions = questions.replaceAll("', '", "','");
+                        questions = questions.replaceAll("' ,'", "','");
                         questions = questions.split("','");
+
                     } else {
                         questions = [];
                     }
@@ -659,9 +774,8 @@ function render_rw_ts_settings_page()
                         jQuery('#user-response-submit-button').click(function () {
                             // check if it's not the starter question
                             //scroll to bottom of modal-content
-                            jQuery('.modal-content').scrollTop(jQuery('.modal-content')[0].scrollHeight);
-
-
+                            console.log('scrolling')
+                             jQuery('.modal-content').animate({scrollTop: jQuery('.modal-content').prop("scrollHeight")}, 500);
 
                             if (question > 0) {
                                 // push the question and response to the array as a key value pair
