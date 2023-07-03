@@ -699,7 +699,7 @@ function render_rw_ts_settings_page()
                     jQuery('#reset').click(function(event){
                         event.preventDefault();
                         jQuery('#rw-ts_text_kickoff_questions').val('')
-                        jQuery('#rw-ts_company_profile).val('')
+                        jQuery('#rw-ts_company_profile').val('')
                         jQuery('#rw-ts_responses').val('')
                         setTimeout(function () {
                             console.log('reset')
