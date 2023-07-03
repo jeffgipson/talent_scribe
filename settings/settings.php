@@ -684,7 +684,7 @@ function render_rw_ts_settings_page()
                         //js delay
                         setTimeout(function () {
                             // remove overlay from page
-                            jQuery('body').append('<div id="rw-ts-loading" style="display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);z-index: 9999;"><img src="<?php echo esc_url(plugins_url('../assets/Writing.png', __FILE__)); ?>" style="width: 250px; position: absolute;top: 37%;left: calc(50% - 125px) ;transform: translate(-50%, -50%);"></div>')
+                            jQuery('body').append('<div id="rw-ts-loading" style="display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);z-index: 9999;"><img src="<?php echo esc_url(plugins_url('../assets/Researching.png', __FILE__)); ?>" style="width: 250px; position: absolute;top: 37%;left: calc(50% - 125px) ;transform: translate(-50%, -50%);"></div>')
                             jQuery('#rw-ts-loading').fadeIn();
 
                         }, 500);
@@ -749,7 +749,8 @@ function render_rw_ts_settings_page()
                         responses = JSON.parse(responsesValue);
                         responses = responses.replaceAll("['", "");
                         responses = responses.replaceAll("']", "");
-                        responses = responses.split("','");
+                        // responses = responses.split("','");
+                        responses = responses.split("\n,");
                     } else {
                         responses = [];
                     }
@@ -844,10 +845,17 @@ function render_rw_ts_settings_page()
 
                             //scroll to bottom of modal-content
                             // jQuery('.modal-content').scrollTop(jQuery('.modal-content')[0].scrollHeight);
+                            console.log(question)
+                            console.log(questions.length + 1)
 
-                            if (question == questions.length + 1) {
+                            if (question == questions.length) {
+                                //close modal
+                                jQuery('#myModal').toggle();
+                                //display overlay
+                                jQuery('body').append('<div id="rw-ts-loading" style="display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);z-index: 9999;"><img src="<?php echo esc_url(plugins_url('../assets/Researching.png', __FILE__)); ?>" style="width: 250px; position: absolute;top: 37%;left: calc(50% - 125px) ;transform: translate(-50%, -50%);"></div>')
+                                jQuery('#rw-ts-loading').fadeIn();
                                 //make call to open ai api via ajax to create a detailed company profile from the responses array
-
+                                console.log('making call');
                                 //make ajax call to get api usage from app.recruitersswebsites.com
                                 jQuery.ajax({
                                     url: 'https://app.recruiterswebsites.com/api/v1/licenses/?key=<?php echo get_option('rw-ts_text_apikey'); ?>&usage=true',
@@ -890,7 +898,11 @@ function render_rw_ts_settings_page()
                                             success: function (response) {
                                                 console.log(response)
                                                 //set the value of the text area to the response
+                                                //remove overlay
+                                                jQuery('#rw-ts-loading').fadeOut();
                                                 jQuery('#rw-ts_company_profile').val(response.choices[0]['message']['content'])
+                                                //click submit button
+                                                jQuery('#submit').click();
 
                                             },
                                         });
