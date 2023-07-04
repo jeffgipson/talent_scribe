@@ -118,6 +118,10 @@ function render_rw_ts_settings_page()
                     <th scope="row">API Usage:</th>
                     <td>
                         <script>
+
+                            // if company profile is set then show the company profile section
+
+
                             var usage = 0;
                             var limit = 0;
                             var status = '';
@@ -138,6 +142,11 @@ function render_rw_ts_settings_page()
                                     if (status == 'Active') {
                                         // change .hidesection class to show
                                         jQuery('tr').removeClass('hidesection')
+                                        if (jQuery('#rw-ts_company_profile').val() != '') {
+                                            jQuery('#companyprofile').removeClass('hidesection')
+                                            jQuery('#companyprofile').show()
+
+                                        }
 
 
                                         jQuery('#status').addClass('active')
@@ -470,6 +479,20 @@ function render_rw_ts_settings_page()
 
                         $rw_ts_company_summary = get_option('rw-ts_company_summary');
                         echo wp_editor($rw_ts_company_summary, 'rw-ts_company_summary', array('textarea_name' => 'rw-ts_company_summary'));
+
+
+                        ?>
+                    </td>
+                </tr>
+
+                <tr id="companyprofile" class="hidesection" style="display: none">
+                    <th scope="row">AI Generated Company Profile:</th>
+                    <td>
+
+                        <?php
+
+                        $rw_ts_company_profile = get_option('rw-ts_company_profile');
+                        echo wp_editor($rw_ts_company_profile, 'rw-ts_company_profile', array('textarea_name' => 'rw-ts_company_profile'));
 
 
                         ?>
