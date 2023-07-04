@@ -128,5 +128,3 @@ function hcf_save_meta_box($post_id)
     }
 
 }
-
-add_action('save_post', 'hcf_save_meta_box');

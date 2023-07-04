@@ -21,13 +21,6 @@ if ($page == 'long-form-content') {
 
         setTimeout(function () {
 
-
-
-
-
-
-
-
             //stop nav-item from going to page
             jQuery('.nav-tab').click(function (e) {
                 e.preventDefault();

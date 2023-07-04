@@ -73,7 +73,27 @@ if ($page_type == 'long-form-content'){
                             // console.log(data.service_key)
                             servicekey = data.service_key
 
-                            //console.log(servicekey)
+                            console.log("<?php echo esc_url(plugins_url('../js/dupcheck.php', __FILE__)); ?>")
+
+                            //var content = jQuery('#content').val();
+                            //jQuery.ajax({
+                            //    url: "<?php //echo esc_url(plugins_url('../js/dupcheck.php', __FILE__)); ?>//",
+                            //    type: 'POST',
+                            //    dataType: 'json',
+                            //    data: JSON.stringify({
+                            //        "content": content
+                            //    }),
+                            //    headers: {
+                            //        'Content-Type': 'application/json'
+                            //
+                            //    },
+                            //    success: function (data) {
+                            //        console.log(data)
+                            //    },
+                            //    error: function (data) {
+                            //        console.log(data)
+                            //    }
+                            //})
 
                         }
                         //if the license is invalid
