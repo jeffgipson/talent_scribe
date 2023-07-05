@@ -637,8 +637,8 @@ function render_rw_ts_settings_page()
                                value="<?php echo get_option('rw-ts_text_kickoff_questions'); ?>">
  <input type="hidden" name="rw-ts_responses" id="rw-ts_responses"
                                value="<?php echo get_option('rw-ts_responses'); ?>">
- <input type="hidden" name="rw-ts_company_profile" id="rw-ts_company_profile"
-                               value="<?php echo get_option('rw-ts_company_profile'); ?>">
+<!-- <input type="hidden" name="rw-ts_company_profile" id="rw-ts_company_profile"-->
+<!--                               value="--><?php //echo get_option('rw-ts_company_profile'); ?><!--">-->
 
 
                         <h3 id="my-prompts-heading">My Prompts</h3>
