@@ -210,7 +210,12 @@ function render_rw_ts_settings_page()
                                                     var questionlist = response.choices[0]['message']['content']
                                                    //check if each question is wrapped in a single quote if not add it
 
-
+                                                    if (questionlist.startsWith("['") == false) {
+                                                        questionlist = "['" + questionlist
+                                                    }
+                                                    if (questionlist.endsWith("']") == false) {
+                                                        questionlist = questionlist + "']"
+                                                    }
                                                     questionlist = questionlist.replaceAll('"', '\'')
                                                     questionlist = questionlist.replaceAll('\n', '')
                                                     questionlist = questionlist.replaceAll('\r', '')
@@ -219,12 +224,7 @@ function render_rw_ts_settings_page()
                                                     questionlist = questionlist.replaceAll(",", "','")
                                                     questionlist = questionlist.replaceAll("''", "'")
                                                     questionlist = questionlist.replaceAll("' '", "'")
-                                                    if (questionlist.startsWith("['") == false) {
-                                                        questionlist = "['" + questionlist
-                                                    }
-                                                    if (questionlist.endsWith("']") == false) {
-                                                        questionlist = questionlist + "']"
-                                                    }
+
                                                     jQuery('#rw-ts_text_kickoff_questions').val(questionlist)
                                                     <?php } ?>
                                                     // remove overlay rw-ts-loading
