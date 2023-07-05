@@ -208,18 +208,19 @@ function render_rw_ts_settings_page()
                                                     //set the value of the text area to the response
                                                     <?php if (get_option('rw-ts_text_kickoff_questions') == '') { ?>
                                                     var questionlist = response.choices[0]['message']['content']
-                                                    //check to see if questionlist starts and ends with square brackets if not then add them
-                                                    //remove all extra spaces and separate with commas
+                                                   //check if each question is wrapped in a single quote if not add it
+
 
                                                     questionlist = questionlist.replaceAll('"', '\'')
                                                     questionlist = questionlist.replaceAll('\n', '')
                                                     questionlist = questionlist.replaceAll('\r', '')
                                                     questionlist = questionlist.replaceAll('\t', '')
                                                     questionlist = questionlist.replaceAll(',,', ',')
+                                                    questionlist = questionlist.replaceAll(",", "','")
                                                     if (questionlist.startsWith('[') == false) {
-                                                        questionlist = '[' + questionlist
+                                                        questionlist = "['" + questionlist
                                                     }
-                                                    if (questionlist.endsWith(']') == false) {
+                                                    if (questionlist.endsWith("']") == false) {
                                                         questionlist = questionlist + ']'
                                                     }
                                                     jQuery('#rw-ts_text_kickoff_questions').val(questionlist)
