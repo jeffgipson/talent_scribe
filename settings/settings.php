@@ -210,22 +210,22 @@ function render_rw_ts_settings_page()
                                                     var questionlist = response.choices[0]['message']['content']
                                                    //check if each question is wrapped in a single quote if not add it
 
-                                                    if (questionlist.startsWith("['") == false) {
-                                                        questionlist = "['" + questionlist
+                                                    // Check if each question is wrapped in single quotes, if not, add them
+                                                    if (!questionlist.startsWith("['")) {
+                                                        questionlist = "['" + questionlist;
                                                     }
-                                                    if (questionlist.endsWith("']") == false) {
-                                                        questionlist = questionlist + "']"
+
+                                                    if (!questionlist.endsWith("']")) {
+                                                        questionlist = questionlist + "']";
                                                     }
-                                                    questionlist = questionlist.replaceAll('"', '\'')
-                                                    questionlist = questionlist.replaceAll('\n', '')
-                                                    questionlist = questionlist.replaceAll('\r', '')
-                                                    questionlist = questionlist.replaceAll('\t', '')
-                                                    questionlist = questionlist.replaceAll(',,', ',')
-                                                    questionlist = questionlist.replaceAll(",", "','")
-                                                    questionlist = questionlist.replaceAll("''", "'")
-                                                    questionlist = questionlist.replaceAll("' '", "'")
-                                                    questionlist = questionlist.replaceAll("[''", "['")
-                                                    questionlist = questionlist.replaceAll("'']", "']")
+
+// Remove unnecessary characters and replace them with appropriate formatting
+                                                    questionlist = questionlist.replace(/"/g, "'");
+                                                    questionlist = questionlist.replace(/\\n|\\r|\\t/g, '');
+                                                    questionlist = questionlist.replace(/',''/g, "','");
+                                                    questionlist = questionlist.replace(/' '/g, "','");
+                                                    questionlist = questionlist.replace(/\[,/g, "['");
+                                                    questionlist = questionlist.replace(/,\]/g, "']");
 
                                                     jQuery('#rw-ts_text_kickoff_questions').val(questionlist)
                                                     <?php } ?>
