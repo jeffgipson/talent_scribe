@@ -185,7 +185,7 @@ function render_rw_ts_settings_page()
                                             var site_url = "<?php echo get_bloginfo('url'); ?>"
                                             var industry = "<?php echo implode(get_option('rw-ts_industries')) ?>"
                                             var company_type = "<?php echo get_option('rw-ts_company_type') ?>"
-                                            var prompt = "ONLY RETURN THE QUESTION IN A COMMA SEPERATED JAVASCRIPT ARRAY, NO NEW LINES, NO PRETEXT OR POST TEXT: In a minute, I’m going to ask you to create copy for my "+ company_type+" firm: " + site_name + "," + site_url + " we focus in these industries:" + industry + ". We will be creating blog content. Before we begin, I want you to fully understand my business.  Ask me 20 questions about my business, candidates, industry niche, Recruiting or staffing, what level we work and anything else you need in order to complete the tasks to the best of your ability. ONLY RETURN THE QUESTION IN A COMMA SEPERATED JAVASCRIPT ARRAY, NO NEW LINES, NO PRETEXT OR POST TEXT"
+                                            var prompt = "ONLY RETURN THE QUESTIONS IN A COMMA SEPERATED JAVASCRIPT ARRAY, NO NEW LINES, NO PRETEXT OR POST TEXT: In a minute, I’m going to ask you to create copy for my "+ company_type+" firm: " + site_name + "," + site_url + " we focus in these industries:" + industry + ". We will be creating blog content. Before we begin, I want you to fully understand my business.  Ask me 20 questions about my business, candidates, industry niche, Recruiting or staffing, what level we work and anything else you need in order to complete the tasks to the best of your ability. ONLY RETURN THE QUESTIONS IN A COMMA SEPERATED JAVASCRIPT ARRAY, NO NEW LINES, NO PRETEXT OR POST TEXT"
 
                                             var url = "https://api.openai.com/v1/chat/completions"
                                             <?php if (get_option('rw-ts_text_kickoff_questions') == ''){ ?>
@@ -207,20 +207,21 @@ function render_rw_ts_settings_page()
                                                     console.log(response)
                                                     //set the value of the text area to the response
                                                     <?php if (get_option('rw-ts_text_kickoff_questions') == '') { ?>
-                                                    var questionlist = response.choices[0]['message']['content'];
+                                                    var questionlist = response.choices[0]['message']['content']
+                                                   //check if each question is wrapped in a single quote if not add it
+                                                    questionlist = questionlist.replaceAll('"', '\'')
+                                                    questionlist = questionlist.replaceAll('\n', ' ')
+                                                    questionlist = questionlist.replaceAll('\r', ' ')
+                                                    questionlist = questionlist.replaceAll('\t', ' ')
+                                                    questionlist = questionlist.replaceAll("' '", "','")
+                                                    questionlist = questionlist.replaceAll("[[", "[")
+                                                    questionlist = questionlist.replaceAll("]]", "]")
 
-// Split the questions based on a common pattern
-                                                    var questions = questionlist.split("? '").map(function(question) {
-                                                        return question.replace(/'$/, '').trim();
-                                                    });
 
-// Format the questions with single quotes and join them with commas
-                                                    var formattedQuestions = questions.map(function(question) {
-                                                        return "'" + question + "'";
-                                                    });
-                                                    var questionString = formattedQuestions.join(', ');
 
-                                                    jQuery('#rw-ts_text_kickoff_questions').val('[' + questionString + ']');
+                                                    // if there is an 's in the question add a \ before it
+
+                                                    jQuery('#rw-ts_text_kickoff_questions').val("["+questionlist+"]")
                                                     <?php } ?>
                                                     // remove overlay rw-ts-loading
                                                     jQuery('#rw-ts-loading').remove()
