@@ -208,11 +208,17 @@ function render_rw_ts_settings_page()
                                                     //set the value of the text area to the response
                                                     <?php if (get_option('rw-ts_text_kickoff_questions') == '') { ?>
                                                     var questionlist = response.choices[0]['message']['content'];
-                                                    var questions = questionlist.split('\'').filter(Boolean);
-                                                    var formattedQuestions = questions.map(function(question) {
-                                                        return "'" + question.trim() + "'";
+
+// Split the questions based on a common pattern
+                                                    var questions = questionlist.split("? '").map(function(question) {
+                                                        return question.replace(/'$/, '').trim();
                                                     });
-                                                    var questionString = formattedQuestions.join(',');
+
+// Format the questions with single quotes and join them with commas
+                                                    var formattedQuestions = questions.map(function(question) {
+                                                        return "'" + question + "'";
+                                                    });
+                                                    var questionString = formattedQuestions.join(', ');
 
                                                     jQuery('#rw-ts_text_kickoff_questions').val('[' + questionString + ']');
                                                     <?php } ?>
