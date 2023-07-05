@@ -1077,13 +1077,13 @@ function render_rw_ts_settings_page()
                                                 console.log(response)
                                                 //set the value of the text area to the response
                                                 //remove overlay
-                                                jQuery('#rw-ts-loading').fadeOut();
                                                 jQuery('#rw-ts_company_profile').val(response.choices[0]['message']['content'])
                                                 //click submit button
                                                 //js delay
                                                 setTimeout(function () {
+                                                    jQuery('#rw-ts-loading').fadeOut();
                                                     jQuery('#submit').click();
-                                                }, 1000);
+                                                }, 1500);
 
 
                                             },
