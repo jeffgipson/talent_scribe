@@ -1080,7 +1080,11 @@ function render_rw_ts_settings_page()
                                                 jQuery('#rw-ts-loading').fadeOut();
                                                 jQuery('#rw-ts_company_profile').val(response.choices[0]['message']['content'])
                                                 //click submit button
-                                                jQuery('#submit').click();
+                                                //js delay
+                                                setTimeout(function () {
+                                                    jQuery('#submit').click();
+                                                }, 1000);
+
 
                                             },
                                         });
