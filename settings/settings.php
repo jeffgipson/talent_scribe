@@ -216,7 +216,8 @@ function render_rw_ts_settings_page()
                                                         questionlist = questionlist + ']'
                                                     }
                                                     //remove all extra spaces and separate with commas
-                                                    questionlist = questionlist.replaceAll(' ', '')
+                                                    //remove all extra spaces between words
+                                                    questionlist = questionlist.replaceAll('  ', ' ')
                                                     questionlist = questionlist.replaceAll('\n', '')
                                                     questionlist = questionlist.replaceAll('\r', '')
                                                     questionlist = questionlist.replaceAll('\t', '')
