@@ -217,11 +217,11 @@ function render_rw_ts_settings_page()
                                                     questionlist = questionlist.replaceAll('\t', '')
                                                     questionlist = questionlist.replaceAll(',,', ',')
                                                     questionlist = questionlist.replaceAll(",", "','")
-                                                    if (questionlist.startsWith('[') == false) {
+                                                    if (questionlist.startsWith("['") == false) {
                                                         questionlist = "['" + questionlist
                                                     }
                                                     if (questionlist.endsWith("']") == false) {
-                                                        questionlist = questionlist + ']'
+                                                        questionlist = questionlist + "']"
                                                     }
                                                     jQuery('#rw-ts_text_kickoff_questions').val(questionlist)
                                                     <?php } ?>
