@@ -215,6 +215,12 @@ function render_rw_ts_settings_page()
                                                     if (questionlist.endsWith(']') == false) {
                                                         questionlist = questionlist + ']'
                                                     }
+                                                    //remove all extra spaces and separate with commas
+                                                    questionlist = questionlist.replaceAll(' ', '')
+                                                    questionlist = questionlist.replaceAll('\n', '')
+                                                    questionlist = questionlist.replaceAll('\r', '')
+                                                    questionlist = questionlist.replaceAll('\t', '')
+                                                    questionlist = questionlist.replaceAll(',,', ',')
                                                     jQuery('#rw-ts_text_kickoff_questions').val(questionlist)
                                                     <?php } ?>
                                                     // remove overlay rw-ts-loading
