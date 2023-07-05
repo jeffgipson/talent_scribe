@@ -1077,7 +1077,10 @@ function render_rw_ts_settings_page()
                                                 console.log(response)
                                                 //set the value of the text area to the response
                                                 //remove overlay
+                                                jQuery('#rw-ts_company_profile').show()
+                                                jQuery('#rw-ts_company_profile-html').click()
                                                 jQuery('#rw-ts_company_profile').val(response.choices[0]['message']['content'])
+                                                jQuery('#rw-ts_company_profile-tmce').click()
                                                 //click submit button
                                                 //js delay
                                                 setTimeout(function () {
