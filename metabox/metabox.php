@@ -53,10 +53,10 @@ function hcf_save_meta_box($post_id)
                 $update_image = false;
             }
         }
-        else{
-            $update_image = false;
-
-        }
+//        else{
+//            $update_image = false;
+//
+//        }
 
         if (array_key_exists($field, $_POST)) {
             update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
@@ -128,3 +128,5 @@ function hcf_save_meta_box($post_id)
     }
 
 }
+
+add_action('save_post', 'hcf_save_meta_box');
