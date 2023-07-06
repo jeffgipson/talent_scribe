@@ -540,7 +540,8 @@ if ($page_type == 'long-form-content'){
                             console.log(data)
                             //loop over response and add images to blog-image div
                             for (var i = 0; i < 10; i++) {
-                                jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                                jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.large2x + '"></div>')
+                                console.log(data)
                             }
                             //on click of next page button make another call to pexels api
                             //on click of id next run code
@@ -564,7 +565,7 @@ if ($page_type == 'long-form-content'){
                                         console.log(data)
                                         //loop over response and add images to blog-image div
                                         for (var i = 0; i < 10; i++) {
-                                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.large2x + '"></div>')
                                         }
                                     },
                                 })
@@ -590,7 +591,7 @@ if ($page_type == 'long-form-content'){
                                         // console.log(data)
                                         //loop over response and add images to blog-image div
                                         for (var i = 0; i < 10; i++) {
-                                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.large2x + '"></div>')
                                         }
                                     },
                                 })
@@ -650,7 +651,7 @@ if (isset($_GET['post'])) {
                         console.log(data)
                         //loop over response and add images to blog-image div
                         for (var i = 0; i < 10; i++) {
-                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                            jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.large2x + '"></div>')
                         }
                         //on click of next page button make another call to pexels api
                         //on click of id next run code
@@ -674,7 +675,7 @@ if (isset($_GET['post'])) {
                                     console.log(data)
                                     //loop over response and add images to blog-image div
                                     for (var i = 0; i < 10; i++) {
-                                        jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                                        jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.large2x + '"></div>')
                                     }
                                 },
                             })
@@ -700,7 +701,7 @@ if (isset($_GET['post'])) {
                                     // console.log(data)
                                     //loop over response and add images to blog-image div
                                     for (var i = 0; i < 10; i++) {
-                                        jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.medium + '"></div>')
+                                        jQuery('#blog-images').append('<div class="img-cont"><img src="' + data.photos[i].src.large2x + '"></div>')
                                     }
                                 },
                             })
