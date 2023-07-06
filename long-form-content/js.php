@@ -182,7 +182,7 @@ if ($page == 'long-form-content') {
                 ?>
                 var past_blogs = "<?php echo $titles; ?>"
                 var company_summary = "<?php echo get_option('rw-ts_company_summary'); ?>"
-                var prompt = "ONLY RETURN THE JSON ARRAY NO PRETEXT OR POST TEXT: Generate a JSON array with ideas for post title for 10 blog posts for " + site_name + " based on this summary: " + company_summary + ". The Last 10 blog posts were: " + past_blogs + "They shouldnt be too similar to the last 10 blog posts but should be relevant to " + site_name + "MUST BE A JSON ARRAY!"
+                var prompt = "ONLY RETURN THE JSON ARRAY NO PRETEXT OR POST TEXT: Generate a JSON array with ideas for post title for 10 blog posts for " + site_name + " based on this summary: " + company_summary + ". The Last 10 blog posts were: " + past_blogs + "They shouldnt be too similar to the last 10 blog posts but should be relevant to " + site_name + "MUST BE A JSON ARRAY! NO PRETEXT OR POST TEXT"
                 var url = "https://api.openai.com/v1/chat/completions"
                 jQuery.ajax({
                     url: url,
@@ -212,6 +212,9 @@ if ($page == 'long-form-content') {
                         // })
                         var title_options = response.choices[0]['message']['content'].replace('\n', '').split(",").map(function (item) {
                             return item.trim();
+                            title_options = title_options.replaceAll('\r','')
+                            title_options = title_options.replaceAll('\n','')
+                            title_options = title_options.replaceAll('post_title:','')
                         })
                         console.log(title_options)
                         var i = 0;
