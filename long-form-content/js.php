@@ -608,6 +608,8 @@ if ($page == 'long-form-content') {
                                         },
                                         error: function (request, status, error) {
                                             alert(request.responseText);
+                                            //create a js alert with a retry button to retry the call
+
                                         }
                                     })
 

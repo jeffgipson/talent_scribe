@@ -37,6 +37,12 @@ if ($page_type == 'long-form-content'){
 
         setTimeout(function () {
 
+
+            var title = '<?php echo get_the_title(); ?>'
+            jQuery('#hcf_description').text(jQuery('#yoast_wpseo_metadesc').val())
+            jQuery('#hcf_title').val(title)
+            jQuery('#hcf_title').val(jQuery('#yoast_wpseo_title').val())
+
             jQuery(document).ready(function () {
 
                 //on click of the image, set the hidden field value to the image url
@@ -439,10 +445,23 @@ if ($page_type == 'long-form-content'){
                     jQuery('#hcf_description').on('change', function () {
                         jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
                     });
+                    //js delay function to wait for the yoast title and description to be populated
+                    setTimeout(function () {
+                        //if the yoast title is empty then populate it with the hcf title
+                        if (jQuery('#yoast_wpseo_title').val() == '') {
+                            jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
+                        }
+                        //if the yoast description is empty then populate it with the hcf description
+                        if (jQuery('#yoast_wpseo_metadesc').val() == '') {
+                            jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
+                        }
+                        if (refresh){
+                            jQuery('#save-post').click();
+                        }
 
-                    if (refresh){
-                        jQuery('#save-post').click();
-                    }
+                    }, 500);
+
+
 
                 }
             })
@@ -454,6 +473,11 @@ if ($page_type == 'long-form-content'){
             //if the search doesnt exist then append it
             if(!jQuery('#search').length){
                 jQuery('#imageheading').after('<div><input type="text" id="search" placeholder="Search for an image" style="width: 90%;margin-right: 10px;"><button id="searchbtn">Search</button></div>')
+
+
+                //set tabindex so that the user can tab to the search button
+                jQuery('#search').attr('tabindex', '1')
+
                 //stop the serach from submitting the form
                 jQuery('#searchbtn').on('click', function (e) {
                     e.preventDefault()
