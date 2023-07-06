@@ -559,7 +559,7 @@ function render_rw_ts_settings_page()
 
                 <!--                    </td>-->
                 <!--                </tr>-->
-                <tr class="hidesection">
+                <tr class="hidesection" style="display: none">
                     <th scope="row">Rewriter settings:</th>
                     <td>
                         <input type="checkbox" name="rw-ts_use_rewriter"
