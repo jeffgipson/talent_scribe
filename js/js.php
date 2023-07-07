@@ -60,55 +60,6 @@ if ($page_type == 'long-form-content'){
 
                 });
 
-
-                //make ajax call to lic server to check if the license is valid
-                jQuery.ajax({
-                    url: 'https://app.recruiterswebsites.com/api/v1/licenses/?key=<?php echo get_option('rw-ts_text_apikey'); ?>&usage=true',
-                    type: 'GET',
-                    dataType: 'json',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer <?php echo get_option('rw-ts_text_apikey'); ?>'
-                    },
-                    success: function (data) {
-                        // console.log(data)
-
-                        //if the license is valid
-                        if (data.status == 'Active') {
-                            // console.log(data.status)
-                            // console.log(data.service_key)
-                            servicekey = data.service_key
-
-                            console.log("<?php echo esc_url(plugins_url('../js/dupcheck.php', __FILE__)); ?>")
-
-                            //var content = jQuery('#content').val();
-                            //jQuery.ajax({
-                            //    url: "<?php //echo esc_url(plugins_url('../js/dupcheck.php', __FILE__)); ?>//",
-                            //    type: 'POST',
-                            //    dataType: 'json',
-                            //    data: JSON.stringify({
-                            //        "content": content
-                            //    }),
-                            //    headers: {
-                            //        'Content-Type': 'application/json'
-                            //
-                            //    },
-                            //    success: function (data) {
-                            //        console.log(data)
-                            //    },
-                            //    error: function (data) {
-                            //        console.log(data)
-                            //    }
-                            //})
-
-                        }
-                        //if the license is invalid
-                        else {
-                            console.log('invalid')
-                        }
-                    },
-                })
-
                 jQuery('body').append('<div id="rw-ts-loading" style="display: none;position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0,0,0,0.5);z-index: 9999;"><img src="<?php echo esc_url(plugins_url('../assets/Writing.png', __FILE__)); ?>" style="width: 250px; position: absolute;top: 37%;left: calc(50% - 125px) ;transform: translate(-50%, -50%);"></div>')
                 //make the image pulse
                 jQuery('#rw-ts-loading img').addClass('pulse')
@@ -376,98 +327,7 @@ if ($page_type == 'long-form-content'){
         ) //end of set timeout function
         ;
 
-        //create a js function to make the pexels api calls
-
-
-
-        // jQuery.ajax({
-        //     url: 'https://api.openai.com/v1/chat/completions',
-        //     type: 'POST',
-        //     dataType: 'json',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': 'Bearer ' + servicekey,
-        //     },
-        //     data: JSON.stringify({
-        //         model: "gpt-3.5-turbo",
-        //         messages: [{"role": "user", "content": "Say this is a test!"}]
-        //     }),
-        //     success: function (data) {
-        //          console.log(data)
-        //     },
-        // })
-
-        function GetSeo(servicekey,title,url,refresh){
-            console.log('GetSeo')
-
-            prompt = 'Write a SEO meta description that is NO LONGER THAN 139 CHARACTERS! for this blog post:' + title
-            jQuery.ajax({
-                url: url,
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                headers: {
-                    Authorization: "Bearer " + servicekey,
-                    contentType: "application/json",
-                },
-                data: JSON.stringify({
-                    //if rw-ts-prompt-checkbox is checked then use it
-
-                    prompt: prompt,
-                    temperature: <?php echo get_option('rw-ts_rewriter_temperature'); ?>,
-//model: "<?php //echo str_replace(' ', '', get_option('rw-ts_language_model')); ?>//",
-                    model: "text-davinci-003",
-                    max_tokens: <?php echo get_option('rw-ts_rewriter_max_tokens'); ?>
-                }),
-                success: function (response) {
-                    console.log(response)
-                    console.log('test from seo call')
-                    //hide the loading screen
-                    jQuery('#rw-ts-loading-seo').hide()
-                    //remove the pulse class
-                    jQuery('#rw-ts-loading img').removeClass('pulse')
-
-                    jQuery('#imageheading').show()
-                    //append a search input and button after the image heading
-
-                    jQuery('#next').show()
-
-                    jQuery('#hcf_description').text(response.choices[0].text.replace("Meta description:", "").replace("Meta Description:", "").replace("\n\n", "").replace(" :", "").replace('"', ''))
-                    jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
-                    jQuery('#hcf_title').val(title)
-                    jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
-
-                    //on change of hcftitle change yoast title
-                    jQuery('#hcf_title').on('change', function () {
-                        jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
-                    });
-                    //on change of hcfdescription change yoast description
-                    jQuery('#hcf_description').on('change', function () {
-                        jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
-                    });
-                    //js delay function to wait for the yoast title and description to be populated
-                    setTimeout(function () {
-                        //if the yoast title is empty then populate it with the hcf title
-                        if (jQuery('#yoast_wpseo_title').val() == '') {
-                            jQuery('#yoast_wpseo_title').val(jQuery('#hcf_title').val())
-                        }
-                        //if the yoast description is empty then populate it with the hcf description
-                        if (jQuery('#yoast_wpseo_metadesc').val() == '') {
-                            jQuery('#yoast_wpseo_metadesc').val(jQuery('#hcf_description').text())
-                        }
-                        if (refresh){
-                            jQuery('#save-post').click();
-                        }
-
-                    }, 500);
-
-
-
-                }
-            })
-        }
-
-        function GetImage(servicekey,title,url){
+       function GetImage(servicekey,title,url){
             console.log('GetImage')
 
             //if the search doesnt exist then append it
@@ -713,8 +573,6 @@ if (isset($_GET['post'])) {
             //show next and prev buttons
             jQuery('#next').show()
             jQuery('#prev').show()
-
-
 
             OnlyImages('Modern Office')
         }, 500);

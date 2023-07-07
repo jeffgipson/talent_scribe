@@ -23,6 +23,14 @@ include plugin_dir_path(__FILE__) . 'styles/style.php';
 include plugin_dir_path(__FILE__) . 'js/js.php';
 
 }
+
+function enqueue_jquery_ui() {
+    wp_enqueue_script('jquery-ui-core');
+    wp_enqueue_script('jquery-ui-dialog');
+    wp_enqueue_style('jquery-ui-dialog');
+}
+add_action('admin_enqueue_scripts', 'enqueue_jquery_ui');
+
 //write function to include css and js files
 add_action('admin_enqueue_scripts', 'add_rw_ts_button');
 

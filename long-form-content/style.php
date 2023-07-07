@@ -253,6 +253,35 @@ if ($page == 'long-form-content') {
     /*    background-color: #fff;*/
     /*}*/
 
+/*error*/
+    .ui-widget-overlay {
+        background: #000000 !important;
+        opacity: .8 !important;
+        -ms-filter: Alpha(Opacity=30);
+        z-index: 9999 !important;
+    }
+    .ui-dialog {
+        z-index: 99999 !important ;
+    }
+
+    .ui-dialog-buttonset button {
+        background: linear-gradient(90deg, rgb(52 137 191) 0%, rgb(104 77 148) 100%);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        float: right;
+    }
+
+    .ui-dialog-buttonset button:hover {
+        background: linear-gradient(90deg, rgb(104 77 148) 0%, rgb(52 137 191) 100%);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        float: right;
+    }
+
 <!--    --><?php }
     ?>
 </style>

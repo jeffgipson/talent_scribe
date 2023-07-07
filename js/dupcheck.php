@@ -5,6 +5,8 @@ header('Content-Type: application/json');
 $requestBody = file_get_contents('php://input');
 $requestData = json_decode($requestBody, true);
 $content = $requestData['content'];
+//replace plus signs with spaces
+$content = str_replace('+', ' ', $content);
 
 // Forward the request to the API
 $apiKey = '5093384-ty543rf-457908sdjf';
